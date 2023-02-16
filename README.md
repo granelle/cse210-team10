@@ -1,2 +1,1 @@
-# cse210-team10
-test
+# CSE-210-project
