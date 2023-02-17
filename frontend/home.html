@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+<div id="header">
+    <div class="tab">
+        <button class="tablinks" >Home</button>
+        <button class="tablinks" >About</button>
+        <button class="tablinks" >Contacts</button>
+    </div>  
+</div>
+
+<div class="container">
+    <div class="left-content">
+        <img src="img/google.png" style="height: 65px; width: 65px;">
+        <div class="input">
+            <input class="input-nick" id="s_name" type="text" name="start_nickname" value="" placeholder="Nick Name" />
+            <input class="input-addr" id="s_addr" type="text" name="start_addr" value="" placeholder="Start Address" />
+        </div>
+
+        <div class="input">
+            <input class="input-nick" id="t_name" type="text" name="target_nickname" value="" placeholder="Nick Name" />
+            <input class="input-addr" id="t_addr" type="text" name="target_addr" value="" placeholder="Target Address" />
+        </div>
+        <div class="grid">
+            <div class="grid-item">
+                <p>&#128663; Commute </p>
+                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+            </div>
+
+            <div class="grid-item">
+                <p>&#127869; Restaurant </p>
+                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+            </div>
+
+            <div class="grid-item">
+                <p>&#128722; Grocery </p>
+                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+            </div>
+
+            <div class="grid-item">
+                <p>&#127976; Medical </p>
+                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+            </div>   
+            
+        </div>
+
+        <button class="go-btn">Go &#9654;</button>
+        
+    </div>
+        
+    <div class="earthImg">
+        <img src="img/earth.png" style="height: 600px; width: 500px;">
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
