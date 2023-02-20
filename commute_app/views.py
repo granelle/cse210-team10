@@ -1,7 +1,23 @@
 from django.shortcuts import render
-import googlemaps
-import requests
+from django.http import HttpResponse
+#import googlemaps
+# import requests
 
+# Create your views here.
+# request -> response
+# request handler
+# action
+# django calls this a "view"
+
+# Mohana and Ye connected homepage to backend 2/20/23
+def go_home(request):
+    # pull data from db
+    # send email, etc
+    #return HttpResponse('Mohana says Hello world')
+    #return render(request, 'hello.html',{'name':'Ye'})
+    return render(request, 'home.html')
+
+# Junyi backend work
 # Create your views here.
 def search_restaurant_near_home(request, home_address):
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
@@ -44,3 +60,5 @@ def search_grocery_store_near_home(request, home_address):
 
 # def time_commuting_from_home_to_target(request, home_address, target_address):
 
+
+    
