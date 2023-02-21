@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="css/tutorial.css">
+</head>
+<body>
+<div id="header">
+    <div class="tab">
+        <button class="tablinks" >Home</button>
+        <button class="tablinks" >About</button>
+        <button class="tablinks" >Contacts</button>
+    </div>  
+</div>
+<div class="container">
+    <div class="left-content">
+        <p class="tutorial-video">Tutorial Video </p>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <p class="compare">Compare your desired houses quickly. </p>
+        <div class="container">
+            <button class="go-back-btn"> Get Started </button>
+            <p class="watch-demo">> Watch Demo</p>
+        </div>
+    </div>
+
+    <div class="" style="width:660px;height: 440px;margin: 50px auto;">
+        <div id="cool-play" class="cool-play">
+            <div class="cool-title">
+                <span>How this website help your rental desicion</span>
+            </div>
+
+            <div class="cool-video">
+                <video id="video" class="video">
+                    <!-- TODO: replace the source path with the tutorial video-->
+                    <source src="img/tutorial_video.MOV" type="video/mp4" ></source>
+                </video>
+                <span class="icon-c-loading"></span>
+            </div>
+            
+            <div id="c-box" class="cool-module">
+                <div class="">
+                    <a id="c-progress" class="cool-progress">
+                        <span id="c-played" class="cool-played"></span>
+                        <span type="range" id="c-drag" class="cool-drag"></span>
+                    </a>						
+                </div>
+                <div class="cool-btn">
+                    <div class="cool-btn-left btn">
+                        <a id="c-previous" class="icon-c-previous"></a>
+                        <a id="c-play" class="icon-c-play" onclick="playPause()"></a>
+                        <a id="c-next" class="icon-c-next"> </a>
+                    </div>
+                    <div class="cool-btn-center">
+                        <span id="c-currentTime">00:00:00</span>
+                        <span>/</span>
+                        <span id="c-totalTime">00:00:00</span>
+                    </div>
+                    <div class="cool-btn-right btn">
+                        <a class="icon-c-refresh"></a>
+                        <a class="voice">
+                            <span class="i-voice icon-c-voice"></span>
+                            <span class="c-voice">
+                                <span class="c-voice-triangle"></span>
+                                <span class="voice-bar">
+                                    <span class="voice-bared">
+                                        <span class="voice-dot"></span>
+                                    </span>
+                                </span>
+                                <span class="voice-mask"></span>									
+                            </span>
+                        </a>
+                        <a id="cool-fullScreen" class="icon-c-enlarge"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>		
+</div>
+<script src="js/tutorial.js" type="text/javascript" async defer></script>
+
+</body>
+</html>
