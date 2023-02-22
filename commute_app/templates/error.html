@@ -2,7 +2,8 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="css/error.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/error.css' %}">
 </head>
 <body>
 <div id="header">
@@ -22,7 +23,7 @@
     </div>
 
     <div class="right-content">
-        <img src="img/error_link.jpg" style="height: 420px; width: 560px;">
+        <img src="{% static 'img/error_link.jpg' %}" style="height: 420px; width: 560px;">
     </div>
     
 </div>

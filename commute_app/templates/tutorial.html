@@ -2,7 +2,8 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="css/tutorial.css">
+    {% load static %}
+    <link rel="stylesheet" href= "{% static 'css/tutorial.css' %}" >
 </head>
 <body>
 <div id="header">
@@ -35,7 +36,7 @@
             <div class="cool-video">
                 <video id="video" class="video">
                     <!-- TODO: replace the source path with the tutorial video-->
-                    <source src="img/tutorial_video.MOV" type="video/mp4" ></source>
+                    <source src="{% static 'img/tutorial_video.mov' %}" type="video/mp4" ></source>
                 </video>
                 <span class="icon-c-loading"></span>
             </div>
@@ -79,7 +80,7 @@
         </div>
     </div>		
 </div>
-<script src="js/tutorial.js" type="text/javascript" async defer></script>
+<script src="{% static 'js/tutorial.js' %}" type="text/javascript" async defer></script>
 
 </body>
 </html>
