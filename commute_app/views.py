@@ -25,7 +25,7 @@ def display_scores(request):
 
 # Junyi backend work
 # Create your views here.
-def search_restaurant_near_home(request, home_address):
+def search_restaurant_near_home(home_address):
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
     geocode_result = gmaps.geocode(home_address)
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
@@ -38,7 +38,7 @@ def search_restaurant_near_home(request, home_address):
     return (number_of_restaurants, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_hospital_near_home(request, home_address):
+def search_hospital_near_home(home_address):
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
     geocode_result = gmaps.geocode(home_address)
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
@@ -51,7 +51,7 @@ def search_hospital_near_home(request, home_address):
     return (number_of_hospitals, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_grocery_store_near_home(request, home_address):
+def search_grocery_store_near_home(home_address):
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
     geocode_result = gmaps.geocode(home_address)
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
@@ -63,6 +63,18 @@ def search_grocery_store_near_home(request, home_address):
     avg_rating = sum(e['rating'] for e in response.json()['results']) / number_of_stores
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
+
+def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA'):
+    restaurant_info = search_restaurant_near_home(home_address)
+    hospital_info = search_hospital_near_home(home_address)
+    grocery_info = search_grocery_store_near_home(home_address)
+    context = {
+        'restaurant_info': restaurant_info,
+        'hospital_info': hospital_info,
+        'grocery_info': grocery_info
+    }
+    return render(request, 'scores.html', context = context)
+
 
 # def time_commuting_from_home_to_target(request, home_address, target_address):
 

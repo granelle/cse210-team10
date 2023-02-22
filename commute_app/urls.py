@@ -5,5 +5,5 @@ from . import views
 # URLConf
 urlpatterns = [
     path('home/', views.go_home),
-    path('scores/', views.display_scores, name="scores")
+    path('scores/', views.search_near_home, name="scores")
 ]
