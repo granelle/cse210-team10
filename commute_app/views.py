@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#import googlemaps
-# import requests
+import googlemaps
+import requests
 
 # Create your views here.
 # request -> response
@@ -16,6 +16,12 @@ def go_home(request):
     #return HttpResponse('Mohana says Hello world')
     #return render(request, 'hello.html',{'name':'Ye'})
     return render(request, 'home.html')
+
+# Se-eun 2/22/23
+def display_scores(request):
+    # display scores
+    # TODO: "go" button at home should direct to this page
+    return render(request, 'scores.html', {'score': 123})
 
 # Junyi backend work
 # Create your views here.
