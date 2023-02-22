@@ -2,7 +2,8 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="css/home.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
 <div id="header">
@@ -15,7 +16,7 @@
 
 <div class="container">
     <div class="left-content">
-        <img src="./img/google.png" style="height: 65px; width: 65px;">
+        <img src="{% static 'img/google.png' %}" style="height: 65px; width: 65px;">
         <div class="input">
             <input class="input-nick" id="s_name" type="text" name="start_nickname" value="" placeholder="Nick Name" />
             <input class="input-addr" id="s_addr" type="text" name="start_addr" value="" placeholder="Start Address" />
@@ -53,7 +54,7 @@
     </div>
         
     <div class="earthImg">
-        <img src="img/earth.png" style="height: 600px; width: 500px;">
+        <img src="{% static 'img/earth.png' %}"  style="height: 600px; width: 500px;">
     </div>
 
 </div>

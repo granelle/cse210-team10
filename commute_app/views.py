@@ -23,6 +23,20 @@ def display_scores(request):
     # TODO: "go" button at home should direct to this page
     return render(request, 'scores.html', {'score': 123})
 
+# Xinyu 2/22/23
+def display_tutorial(request):
+    # display tutorial
+    # TODO: "about" button at home should direct to this page
+    # TODO: "get start" at this page should direct to home page
+    return render(request, 'tutorial.html')
+
+def display_error(request):
+    # display error
+    # TODO: "go" button at home should direct to this page when errors occur
+    # TODO: "go back" button at this page should direct to home page 
+    return render(request, 'error.html')
+
+
 # Junyi backend work
 # Create your views here.
 def search_restaurant_near_home(home_address):
