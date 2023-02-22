@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import googlemaps
-import requests
+#import googlemaps
+#import requests
 
 # Create your views here.
 # request -> response
