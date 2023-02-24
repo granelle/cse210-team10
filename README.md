@@ -6,7 +6,7 @@ You can either activate our virtual environment in `/myenv` or build the environ
 
 To activate our virtual environment, run:
 
-`source env/bin/activate`
+`source myenv/bin/activate`
 
 To create your own environment, install python 3 and the following packages:
 * Django: https://docs.djangoproject.com/en/4.1/topics/install/
