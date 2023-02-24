@@ -39,8 +39,7 @@ def display_error(request):
 
 # Junyi backend work
 # Create your views here.
-def search_restaurant_near_home(home_address):
-    gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
+def search_restaurant_near_home(gmaps, home_address):
     geocode_result = gmaps.geocode(home_address)
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
     
@@ -52,8 +51,7 @@ def search_restaurant_near_home(home_address):
     return (number_of_restaurants, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_hospital_near_home(home_address):
-    gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
+def search_hospital_near_home(gmaps, home_address):
     geocode_result = gmaps.geocode(home_address)
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
     
@@ -65,8 +63,7 @@ def search_hospital_near_home(home_address):
     return (number_of_hospitals, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_grocery_store_near_home(home_address):
-    gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
+def search_grocery_store_near_home(gmaps, home_address):
     geocode_result = gmaps.geocode(home_address)
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
     
@@ -78,19 +75,29 @@ def search_grocery_store_near_home(home_address):
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA'):
-    restaurant_info = search_restaurant_near_home(home_address)
-    hospital_info = search_hospital_near_home(home_address)
-    grocery_info = search_grocery_store_near_home(home_address)
+def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', target_address = '9500 Gilman Dr, La Jolla, CA'):
+    gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
+    restaurant_info = search_restaurant_near_home(gmaps, home_address)
+    hospital_info = search_hospital_near_home(gmaps, home_address)
+    grocery_info = search_grocery_store_near_home(gmaps, home_address)
+    commuting_info = time_commuting_from_home_to_target(gmaps, home_address, target_address)
     context = {
         'restaurant_info': restaurant_info,
         'hospital_info': hospital_info,
-        'grocery_info': grocery_info
+        'grocery_info': grocery_info,
+        'commuting_info': commuting_info
     }
     return render(request, 'scores.html', context = context)
 
 
-# def time_commuting_from_home_to_target(request, home_address, target_address):
+def time_commuting_from_home_to_target(gmaps, source_address, target_address):
+    s_geocode_result = gmaps.geocode(source_address)
+    t_geocode_result = gmaps.geocode(target_address)
+    s_lat, s_lng, t_lat, t_lng = str(s_geocode_result[0]['geometry']['location']['lat']), str(s_geocode_result[0]['geometry']['location']['lng']), str(t_geocode_result[0]['geometry']['location']['lat']), str(t_geocode_result[0]['geometry']['location']['lng'])
+    # "https://maps.googleapis.com/maps/api/distancematrix/json?origins=40.6655101%2C-73.89188969999998&destinations=40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&key=YOUR_API_KEY"
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + s_lat + "%2C" + s_lng + "&destinations=" + t_lat + "%2C" + t_lng + "&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
+    response = requests.request("GET", url, headers = {}, data = {})
+    est_time = response.json()['rows'][0]['elements'][0]['duration']['text']
+    distance = response.json()['rows'][0]['elements'][0]['distance']['text']
+    return (est_time, distance)
 
-
-    
