@@ -10,15 +10,26 @@
 }
 
 
-
 .left-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 55%;
-  margin-top: 40px;
-  margin-left: 100px;
-  
+  margin-left: 50px;
+}
+
+.left-content a{
+  border-radius: 25px;
+  background-color: #4285F4; /* Green */
+  border: none;
+  color: white;
+  width: 80px;
+  padding: 10px 20px 10px 20px;
+  margin-top: 50px;
+  font-weight: bolder;
+  cursor: pointer;
+  text-decoration: none; 
+  text-align: center;
 }
 
 .input {
@@ -49,7 +60,7 @@
   margin-left: 100px;
 }
 
-.tab button {
+.tab a {
   background-color: inherit;
   float: left;
   border: none;
@@ -59,21 +70,21 @@
   margin-left: 200px;
   transition: 0.3s;
   font-size: 17px;
+  text-decoration: none; 
+  color: black
 }
 
-.tab button:hover {
+.tab a:hover {
   background-color: #ddd;
 }
 
-.tab button.active {
+.tab a.active {
   background-color: #ccc;
 }
 
 
 .earthImg {
   float:left;
-  height: 100px;
-  width: 200px;
 }
 
 
@@ -84,22 +95,11 @@
   height: 150px;
   width: 550px; 
 }
+
 .grid-item {
   flex: 1 1 calc(50%);
   margin-top: 10px;
   margin-right: 0px;
-}
-
-.go-btn {
-  border-radius: 25px;
-  background-color: #4285F4; /* Green */
-  border: none;
-  color: white;
-  width: 100px;
-  padding: 10px 20px 10px 20px;
-  margin-top: 50px;
-  font-weight: bolder;
-  cursor: pointer;
 }
 
 
