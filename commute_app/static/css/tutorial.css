@@ -1,3 +1,4 @@
+@import "base.css"; 
 
 * {
   font-family: "Courier New", monospace;
@@ -49,31 +50,6 @@
   width: 75%;
   margin-top: 100px;
   margin-left: 40px;
-}
-
-.tab {
-  overflow: hidden;
-  margin-left: 100px;
-}
-
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  margin-left: 200px;
-  transition: 0.3s;
-  font-size: 17px;
-}
-
-.tab button:hover {
-  background-color: #ddd;
-}
-
-.tab button.active {
-  background-color: #ccc;
 }
 
 .go-back-btn {

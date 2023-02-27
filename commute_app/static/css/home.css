@@ -1,4 +1,4 @@
-
+@import "base.css"; 
 * {
   font-family: "Courier New", monospace;
   font-size: medium;
@@ -53,33 +53,6 @@
   border-radius: 0px 20px 20px 0px;
   border:1px solid #DBDBDB;
   padding: 2px 20px 2px 20px; 
-}
-
-.tab {
-  overflow: hidden;
-  margin-left: 100px;
-}
-
-.tab a {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  margin-left: 200px;
-  transition: 0.3s;
-  font-size: 17px;
-  text-decoration: none; 
-  color: black
-}
-
-.tab a:hover {
-  background-color: #ddd;
-}
-
-.tab a.active {
-  background-color: #ccc;
 }
 
 
