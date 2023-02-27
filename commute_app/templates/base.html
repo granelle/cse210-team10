@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+    <div id="header">
+        {% block header %}
+        <div class="tab">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'tutorial' %}">About</a>
+            <a href=""  >Contacts</a>
+        </div>
+        {% endblock %}  
+    </div>
+
+    <div class="container">
+        {% block container %}{% endblock %}
+    </div>
+
+</body>
+</html>
