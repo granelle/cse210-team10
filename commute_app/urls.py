@@ -4,8 +4,8 @@ from . import views
 # URL config model
 # URLConf
 urlpatterns = [
-    path('home/', views.go_home),
+    path('home/', views.go_home, name = "home"),
     path('scores/', views.search_near_home, name = "scores"),
-    path('tutorial/', views.display_tutorial),
+    path('tutorial/', views.display_tutorial, name = 'tutorial'),
     path('error/', views.display_error)
 ]

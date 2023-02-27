@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    {% load static %}
-    <link rel="stylesheet" href= "{% static 'css/tutorial.css' %}" >
-</head>
-<body>
-<div id="header">
-    <div class="tab">
-        <button class="tablinks" >Home</button>
-        <button class="tablinks" >About</button>
-        <button class="tablinks" >Contacts</button>
-    </div>  
-</div>
+
+{% extends "base.html" %}
+
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/tutorial.css' %}">
+{% endblock %}
+
+
+
+{% block container %}
 <div class="container">
     <div class="left-content">
         <p class="tutorial-video">Tutorial Video </p>
@@ -36,6 +32,7 @@
             <div class="cool-video">
                 <video id="video" class="video">
                     <!-- TODO: replace the source path with the tutorial video-->
+                    {% load static %}
                     <source src="{% static 'img/tutorial_video.mov' %}" type="video/mp4" ></source>
                 </video>
                 <span class="icon-c-loading"></span>
@@ -78,9 +75,12 @@
                 </div>
             </div>
         </div>
-    </div>		
-</div>
-<script src="{% static 'js/tutorial.js' %}" type="text/javascript" async defer></script>
+    </div>	
 
-</body>
-</html>
+    {% load static %}
+    <script src="{% static 'js/tutorial.js' %}" type="text/javascript" async defer></script>
+</div>
+
+{% endblock %}
+
+

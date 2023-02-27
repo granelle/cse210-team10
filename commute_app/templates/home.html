@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    {% load static %}
+{% extends "base.html" %}
+
+{% load static %}
+{% block styles %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-</head>
-<body>
-<div id="header">
-    <div class="tab">
-        <button class="tablinks" >Home</button>
-        <button class="tablinks" >About</button>
-        <button class="tablinks" >Contacts</button>
-    </div>  
-</div>
+{% endblock %}
+
+{% block container %}
 
 <div class="container">
     <div class="left-content">
-        <img src="{% static 'img/google.png' %}" style="height: 65px; width: 65px;">
         <div class="input">
             <input class="input-nick" id="s_name" type="text" name="start_nickname" value="" placeholder="Nick Name" />
             <input class="input-addr" id="s_addr" type="text" name="start_addr" value="" placeholder="Start Address" />
@@ -49,17 +41,16 @@
             
         </div>
 
-        <button class="go-btn"><a href="{% url 'scores' %}" class="go-btn">Go &#9654;</a></button> 
+        <a href="{% url 'scores' %}">Go &#9654;</a>
         
     </div>
-        
+    
     <div class="earthImg">
-        <img src="{% static 'img/earth.png' %}"  style="height: 600px; width: 500px;">
+        {% load static %}
+        <img src="{% static 'img/earth.png' %}"  style="height: 450px; width: 500px;">
     </div>
 
 </div>
 
+{% endblock %}
 
-
-</body>
-</html>
