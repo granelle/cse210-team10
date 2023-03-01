@@ -75,5 +75,25 @@
   margin-right: 0px;
 }
 
+.form-submit-button {
+	background: #4285F4;
+	color: #fff;
+    width: 120px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+	text-shadow: none;
+}
+
+.form-submit-button:hover {
+	background: #010D82;
+	color: #fff;
+    width: 120px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+	text-shadow: none;
+}
+
 
 
