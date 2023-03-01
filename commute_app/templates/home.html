@@ -7,41 +7,43 @@
 
 {% block container %}
 
-<div class="container">
+<form class="container", method="post", action="{% url 'scores' %}">
+    {% csrf_token %}
     <div class="left-content">
         <div class="input">
-            <input class="input-nick" id="s_name" type="text" name="start_nickname" value="" placeholder="Nick Name" />
-            <input class="input-addr" id="s_addr" type="text" name="start_addr" value="" placeholder="Start Address" />
+            <input class="input-nick" id="start_name" type="text" name="start_name" value="" placeholder="Nick Name" />
+            <input class="input-addr" id="start_addr" type="text" name="start_addr" value="" placeholder="Start Address" />
         </div>
 
         <div class="input">
-            <input class="input-nick" id="t_name" type="text" name="target_nickname" value="" placeholder="Nick Name" />
-            <input class="input-addr" id="t_addr" type="text" name="target_addr" value="" placeholder="Target Address" />
+            <input class="input-nick" id="target_name" type="text" name="target_name" value="" placeholder="Nick Name" />
+            <input class="input-addr" id="target_addr" type="text" name="target_addr" value="" placeholder="Target Address" />
         </div>
         <div class="grid">
             <div class="grid-item">
                 <p>&#128663; Commute </p>
-                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+                <input type="range" id="commute_weight" name = "commute_weight" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
             </div>
 
             <div class="grid-item">
                 <p>&#127869; Restaurant </p>
-                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+                <input type="range" id="restaurant_weight" name="restaurant_weight" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
             </div>
 
             <div class="grid-item">
                 <p>&#128722; Grocery </p>
-                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+                <input type="range" id="grocery_weight" name="grocery_weight" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
             </div>
 
             <div class="grid-item">
                 <p>&#127976; Medical </p>
-                <input type="range" id="range1" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
+                <input type="range" id="medical_weight" name="medical_weight" min="0" max="100" step="20" onchange="b.value=this.value" style="width: 225px;"/>
             </div>   
             
         </div>
-
-        <a href="{% url 'scores' %}">Go &#9654;</a>
+        <br>
+        <br>
+        <input type="submit" value="Go &#9654" class="form-submit-button">
         
     </div>
     
@@ -50,7 +52,7 @@
         <img src="{% static 'img/earth.png' %}"  style="height: 450px; width: 500px;">
     </div>
 
-</div>
+</form>
 
 {% endblock %}
 

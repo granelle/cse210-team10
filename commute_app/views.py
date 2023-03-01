@@ -21,7 +21,27 @@ def go_home(request):
 def display_scores(request):
     # display scores
     # TODO: "go" button at home should direct to this page
-    return render(request, 'scores.html', {'score': 123})
+    # TODO: solve the incorrect address input -> jump to error page
+    if request.method == 'POST':
+        inputContent = {
+            'start_name' : request.POST['start_name'],
+            'start_addr': request.POST['start_addr'],
+            'target_name': request.POST['target_name'],
+            'target_addr': request.POST['target_addr'],
+            'commute_weight': request.POST['commute_weight'],
+            'restaurant_weight': request.POST['restaurant_weight'],
+            'grocery_weight': request.POST['grocery_weight'],
+            'medical_weight': request.POST['medical_weight']
+        }
+        return scores_generator(request, userInput = inputContent)
+    else:
+        # TODO: some error check
+        return render(request, 'error.html')
+
+def scores_generator(request, userInput):
+    # TODO: figure out the algorithm to generate score
+    # It's a basic scores calculate with only commute
+    return search_near_home(request, home_address = userInput['start_addr'], target_address = userInput['target_addr'])
 
 # Xinyu 2/22/23
 def display_tutorial(request):
