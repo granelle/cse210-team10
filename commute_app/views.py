@@ -56,6 +56,11 @@ def display_error(request):
     # TODO: "go back" button at this page should direct to home page 
     return render(request, 'error.html')
 
+def display_test(request):
+    # display error
+    # TODO: "go" button at home should direct to this page when errors occur
+    # TODO: "go back" button at this page should direct to home page 
+    return render(request, 'test.html')
 
 # Junyi backend work
 # Create your views here.

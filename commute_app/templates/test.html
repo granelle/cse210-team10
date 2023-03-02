@@ -1,0 +1,42 @@
+	
+<!DOCTYPE html>
+<html>
+<head> 
+<title>Google Maps JavaScript API with Places Library Autocomplete Address Field</title> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Google Maps JavaScript library -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"></script>
+ 
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <p><h1>Google Maps JavaScript API with Places Library Autocomplete Address Field</h1></p>
+   <!-- Autocomplete location search input --> 
+   <div class="form-group">
+    <label>Location:</label>
+    <input type="text" class="form-control" id="search_input" placeholder="Type address..." />
+   </div>
+     </div>
+   </div>
+</div>
+<script>
+var searchInput = 'search_input';
+ 
+$(document).ready(function () {
+ var autocomplete;
+ autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
+  types: ['geocode'],
+  /*componentRestrictions: {
+   country: "USA"
+  }*/
+ });
+  
+ google.maps.event.addListener(autocomplete, 'place_changed', function () {
+  var near_place = autocomplete.getPlace();
+ });
+});
+</script>
+</body>
+</html>

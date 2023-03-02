@@ -1,3 +1,7 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Google Maps JavaScript library -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"></script>
+
 {% extends "base.html" %}
 
 {% load static %}
@@ -53,6 +57,38 @@
     </div>
 
 </form>
+
+<script>
+var start_addr = 'start_addr';
+var target_addr = 'target_addr';
+ 
+$(document).ready(function () {
+ var start;
+ var target;
+
+ start = new google.maps.places.Autocomplete((document.getElementById(start_addr)), {
+  types: ['establishment', 'geocode'],
+  componentRestrictions: {
+   country: "USA"
+  }
+ });
+
+ target = new google.maps.places.Autocomplete((document.getElementById(target_addr)), {
+  types: ['establishment', 'geocode'],
+  componentRestrictions: {
+   country: "USA"
+  }
+ });
+  
+ google.maps.event.addListener(start, 'place_changed', function () {
+  var near_place = start.getPlace();
+ });
+
+ google.maps.event.addListener(target, 'place_changed', function () {
+    var near_place = target.getPlace();
+    });
+});
+</script>
 
 {% endblock %}
 
