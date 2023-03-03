@@ -1,24 +1,29 @@
-<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Google Maps JavaScript library -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"></script>
+
+
+{% extends "base.html" %}
+
+<!-- CSS & js -->
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/scores/grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/scores/overall.css' %}">
+    <link rel="stylesheet" href="{% static 'css/scores/each.css' %}">
+    <link rel="stylesheet" href="{% static 'js/colors.js' %}">
+{% endblock %}
+
+{% block container %}
+
 
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-
     <!-- Title -->
-    <title>Se-eun Yoon</title>
-
+    <title>Scores</title>
     <!-- Mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!-- CSS & js -->
-    {% load static %}
-    {% block styles %}
-        <link rel="stylesheet" href="{% static 'css/scores/grid.css' %}">
-        <link rel="stylesheet" href="{% static 'css/scores/overall.css' %}">
-        <link rel="stylesheet" href="{% static 'css/scores/each.css' %}">
-        <link rel="stylesheet" href="{% static 'js/colors.js' %}">
-    {% endblock %}
-    
   </head>
 
   <body>
@@ -93,6 +98,9 @@
 
       </div>
   </section>
+
+
+  {% endblock %}
 
 
 {% comment %} <h1>Info</h1>

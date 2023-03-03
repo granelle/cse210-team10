@@ -1,3 +1,15 @@
+@import "../base.css"; 
+* {
+  font-family: "Courier New", monospace;
+  font-size: medium;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+
 body{
 	font-family:"Open Sans", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, Tahoma, sans-serif;
 	font-size: 20px;
@@ -5,7 +17,7 @@ body{
 
 
 #results {
-   background: #ffffff;
+   background: #d1b7f5;
    padding-top: 20px;
    padding-bottom: 40px;
    overflow: hidden;
