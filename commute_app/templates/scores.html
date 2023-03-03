@@ -1,4 +1,101 @@
-<h1>Info</h1>
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Title -->
+    <title>Se-eun Yoon</title>
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS & js -->
+    {% load static %}
+    {% block styles %}
+        <link rel="stylesheet" href="{% static 'css/scores/grid.css' %}">
+        <link rel="stylesheet" href="{% static 'css/scores/overall.css' %}">
+        <link rel="stylesheet" href="{% static 'css/scores/each.css' %}">
+        <link rel="stylesheet" href="{% static 'js/colors.js' %}">
+    {% endblock %}
+    
+  </head>
+
+  <body>
+
+   <!-- Results -->
+   <section id="results">
+      <div class="row">
+        <div class="ten columns header-col">
+         <h1 class="title">Results for </h1> <em class="address">ADDRESS (NICKNAME)</em>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Overall score -->
+    <section id="overall">
+      <div class="row">
+        <div class="ten columns header-col">
+         <h1 class="criterion">Overall score: </h1> <em class="score">7</em>
+         <h2 class="explanation">(Optional) briefly show how score was calculated</h2> 
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Commute -->
+    <section id="commute">
+       <div class="row commute">
+          <div class="ten columns header-col">
+             <h1 id="criterion">Commute score: <em id="score">8</em></h1> 
+             <h2 id="explanation">You have chosen <em id="emphasis"> WALK </em></h2> 
+          </div>
+
+       </div>
+   </section>
+
+   <!-- Restaurant -->
+   <section id="restaurant">
+      <div class="row restaurant">
+
+         <div class="ten columns header-col">
+            <h1 id="criterion">Restaurant score: <em id="score">5</em></h1> 
+            <h2 id="explanation"><em id="emphasis"> 5 </em>restaurants nearby</h2> 
+         </div>
+
+      </div>
+  </section>
+
+
+     <!-- Grocery -->
+     <section id="grocery">
+      <div class="row grocery">
+
+         <div class="ten columns header-col">
+            <h1 id="criterion">Grocery score: <em id="score">9</em></h1> 
+            <h2 id="explanation"><em id="emphasis"> Trader Joe's </em><em id="emphasis"> 1mi </em> away</h2> 
+         </div>
+
+      </div>
+  </section>
+
+
+
+     <!-- Medical -->
+     <section id="medical">
+      <div class="row medical">
+
+         <div class="ten columns header-col">
+            <h1 id="criterion">Medical score: <em id="score">5</em></h1> 
+            <h2 id="explanation">Nearest hostpital<em id="emphasis"> 10mi </em> away</h2> 
+         </div>
+
+      </div>
+  </section>
+
+
+{% comment %} <h1>Info</h1>
 <div class = 'info'>
     <table>
         <tr>
@@ -19,4 +116,4 @@
         </tr>
     </table>
 
-</div>
+</div> {% endcomment %}

@@ -1,0 +1,64 @@
+body{
+	font-family:"Open Sans", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, Tahoma, sans-serif;
+	font-size: 20px;
+}
+
+
+#results {
+   background: #ffffff;
+   padding-top: 20px;
+   padding-bottom: 40px;
+   overflow: hidden;
+}
+
+#results .title {
+   font: 30px 'opensans', sans-serif;
+   font-weight: bold;
+   color: black;
+   margin-bottom: 12px;
+   display: inline;
+}
+
+#results .address {
+   font: 30px 'opensans', sans-serif;
+   font-weight: bold;
+   text-transform: uppercase;
+   margin-left: 5px;
+   color: rgb(13, 0, 64); 
+}
+
+
+#overall {
+   background: #eeeea1;
+   padding-top: 20px;
+   padding-bottom: 40px;
+   overflow: hidden;
+}
+
+#overall .criterion {
+   font: 40px/50px 'opensans', sans-serif;
+   font-weight: bold;
+   color: black;
+   margin-bottom: 12px;
+   display: inline;
+}
+
+#overall .score {
+   font: 60px 'opensans', sans-serif;
+   font-weight: bold;
+   text-transform: uppercase;
+   margin-left: 5px;
+   color: rgb(246, 59, 7); 
+}
+
+#overall .explanation {
+   margin-left: 2px;
+   font: 20px/28px 'opensans', sans-serif;
+   font-weight: bold;
+   margin-top: 10px;
+   margin-bottom: 1px;
+   color: rgb(95, 89, 89);
+}
+
+
+

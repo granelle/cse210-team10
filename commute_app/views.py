@@ -22,21 +22,22 @@ def display_scores(request):
     # display scores
     # TODO: "go" button at home should direct to this page
     # TODO: solve the incorrect address input -> jump to error page
-    if request.method == 'POST':
-        inputContent = {
-            'start_name' : request.POST['start_name'],
-            'start_addr': request.POST['start_addr'],
-            'target_name': request.POST['target_name'],
-            'target_addr': request.POST['target_addr'],
-            'commute_weight': request.POST['commute_weight'],
-            'restaurant_weight': request.POST['restaurant_weight'],
-            'grocery_weight': request.POST['grocery_weight'],
-            'medical_weight': request.POST['medical_weight']
-        }
-        return scores_generator(request, userInput = inputContent)
-    else:
-        # TODO: some error check
-        return render(request, 'error.html')
+    return render(request, 'scores.html')
+    # if request.method == 'POST':
+    #     inputContent = {
+    #         'start_name' : request.POST['start_name'],
+    #         'start_addr': request.POST['start_addr'],
+    #         'target_name': request.POST['target_name'],
+    #         'target_addr': request.POST['target_addr'],
+    #         'commute_weight': request.POST['commute_weight'],
+    #         'restaurant_weight': request.POST['restaurant_weight'],
+    #         'grocery_weight': request.POST['grocery_weight'],
+    #         'medical_weight': request.POST['medical_weight']
+    #     }
+    #     return scores_generator(request, userInput = inputContent)
+    # else:
+    #     # TODO: some error check
+    #     return render(request, 'error.html')
 
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
