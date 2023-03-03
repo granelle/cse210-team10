@@ -1,0 +1,58 @@
+#commute {
+   background: #b3d9f9;
+   padding-top: 20px;
+   padding-bottom: 40px;
+   overflow: hidden;
+}
+#restaurant {
+   background: #ebefc8;
+   padding-top: 20px;
+   padding-bottom: 40px;
+   overflow: hidden;
+}
+
+#grocery {
+   background: #f1b79a;
+   padding-top: 20px;
+   padding-bottom: 40px;
+   overflow: hidden;
+}
+
+#medical {
+   background: hsl(172, 90%, 88%);
+   padding-top: 20px;
+   padding-bottom: 40px;
+   overflow: hidden;
+}
+
+
+.header-col { 
+   padding-top: 9px; 
+}
+
+#criterion {
+   font: 24px/32px 'opensans', sans-serif;
+   font-weight: bold;
+   text-transform: uppercase;
+}
+#score {
+   font: 32px 'opensans', sans-serif;
+   font-weight: bold;
+   text-transform: uppercase;
+   margin-left: 2px;
+   color: rgb(246, 83, 7); 
+}
+#explanation {
+   margin-left: 2px;
+   font: 20px 'opensans', sans-serif;
+   font-weight: bold;
+   margin-top: 5px;
+   margin-bottom: 0px;
+   color: rgb(95, 89, 89);
+}
+#emphasis {
+   margin-left: 2px;
+   font: 22px 'opensans', sans-serif;
+   font-weight: bold;
+   color: rgb(37, 37, 37);
+}
