@@ -83,7 +83,7 @@ def search_hospital_near_home(gmaps, home_address):
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
     
     #compose the url
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=1000&type=hospital&keyword=hospital&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=3000&type=hospital&keyword=hospital&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
     response = requests.request("GET", url, headers = {}, data = {})
     number_of_hospitals = len(response.json()['results'])
     avg_rating = sum(e['rating'] for e in response.json()['results']) / number_of_hospitals
@@ -104,9 +104,9 @@ def search_grocery_store_near_home(gmaps, home_address):
 
 def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', target_address = '9500 Gilman Dr, La Jolla, CA'):
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
-    restaurant_info = search_restaurant_near_home(gmaps, home_address)
-    hospital_info = search_hospital_near_home(gmaps, home_address)
-    grocery_info = search_grocery_store_near_home(gmaps, home_address)
+    restaurant_info = score_nearby_restaurants(gmaps, home_address)
+    hospital_info = score_nearby_hospitals(gmaps, home_address)
+    grocery_info = score_nearby_stores(gmaps, home_address)
     commuting_info = time_commuting_from_home_to_target(gmaps, home_address, target_address)
     context = {
         'restaurant_info': restaurant_info,
