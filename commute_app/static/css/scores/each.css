@@ -11,6 +11,28 @@
    overflow: hidden;
 }
 
+.r4d5 {
+   color: green;
+}
+
+.r4 {
+   color: greenyellow;
+}
+
+.r3 {
+   color: orange;
+}
+
+.r2 {
+   color: yellow;
+}
+
+.r1 {
+   color: red;
+}
+
+
+
 #grocery {
    background: #f1b79a;
    padding-top: 20px;
