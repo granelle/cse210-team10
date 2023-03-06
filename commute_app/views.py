@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import googlemaps
 import requests
+from math import *
 
 # Create your views here.
 # request -> response
@@ -70,7 +71,7 @@ def search_restaurant_near_home(gmaps, home_address):
     lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
     
     #compose the url
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=1000&type=restaurant&keyword=restaurant&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=5000&type=restaurant&keyword=restaurant&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
     response = requests.request("GET", url, headers = {}, data = {})
     number_of_restaurants = len(response.json()['results'])
     avg_rating = sum(e['rating'] for e in response.json()['results']) / number_of_restaurants
@@ -126,4 +127,19 @@ def time_commuting_from_home_to_target(gmaps, source_address, target_address):
     est_time = response.json()['rows'][0]['elements'][0]['duration']['text']
     distance = response.json()['rows'][0]['elements'][0]['distance']['text']
     return (est_time, distance)
+
+def score_nearby_restaurants(gmaps, home_address):
+    num_of_restaurants, avg_rating = search_restaurant_near_home(gmaps, home_address)
+    score = log(0.1 * num_of_restaurants + 0.1) + avg_rating
+    return score
+
+def score_nearby_hospitals(gmaps, home_address):
+    num_of_hospitals, avg_rating = search_hospital_near_home(gmaps, home_address)
+    score = log(0.1 * num_of_hospitals + 0.1) + avg_rating
+    return score
+
+def score_nearby_stores(gmaps, home_address):
+    num_of_stores, avg_rating = search_grocery_store_near_home(gmaps, home_address)
+    score = log(0.1 * num_of_stores + 0.1) + avg_rating
+    return score
 
