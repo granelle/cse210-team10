@@ -3,12 +3,19 @@ from django.http import HttpResponse
 import googlemaps
 import requests
 from math import *
+from .models import Search
 
 # Create your views here.
 # request -> response
 # request handler
 # action
 # django calls this a "view"
+
+# Mohana database stuff
+def database_test(request):
+    Search.objects.create(startAdd = "4067 Miramar st.", startNick = "Mo grad housing", targetAdd = "39 Santa Catalina Aisle", targetNick = "Irvine home")
+    return HttpResponse("Hi Mohana")
+
 
 # Mohana and Ye connected homepage to backend 2/20/23
 def go_home(request):
@@ -44,6 +51,7 @@ def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
     # It's a basic scores calculate with only commute
     return search_near_home(request, home_address = userInput['start_addr'], target_address = userInput['target_addr'])
+
 
 # Xinyu 2/22/23
 def display_tutorial(request):
