@@ -30,27 +30,31 @@ def display_scores(request):
     # display scores
     # TODO: "go" button at home should direct to this page
     # TODO: solve the incorrect address input -> jump to error page
-    return render(request, 'scores.html')
-    # if request.method == 'POST':
-    #     inputContent = {
-    #         'start_name' : request.POST['start_name'],
-    #         'start_addr': request.POST['start_addr'],
-    #         'target_name': request.POST['target_name'],
-    #         'target_addr': request.POST['target_addr'],
-    #         'commute_weight': request.POST['commute_weight'],
-    #         'restaurant_weight': request.POST['restaurant_weight'],
-    #         'grocery_weight': request.POST['grocery_weight'],
-    #         'medical_weight': request.POST['medical_weight']
-    #     }
-    #     return scores_generator(request, userInput = inputContent)
-    # else:
-    #     # TODO: some error check
-    #     return render(request, 'error.html')
+    #return render(request, 'scores.html')
+    if request.method == 'POST':
+        inputContent = {
+            'start_name' : request.POST['start_name'],
+            'start_addr': request.POST['start_addr'],
+            'target_name': request.POST['target_name'],
+            'target_addr': request.POST['target_addr'],
+            'commute_weight': request.POST['commute_weight'],
+            'restaurant_weight': request.POST['restaurant_weight'],
+            'grocery_weight': request.POST['grocery_weight'],
+            'medical_weight': request.POST['medical_weight']
+        }
+        return scores_generator(request, userInput = inputContent)
+    else:
+        # TODO: some error check
+        return render(request, 'error.html')
 
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
     # It's a basic scores calculate with only commute
-    return search_near_home(request, home_address = userInput['start_addr'], target_address = userInput['target_addr'])
+    #return search_near_home(request, home_address = userInput['start_addr'], 
+    #target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
+    return search_near_home(request, home_address = userInput['start_addr'], 
+    target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
+
 
 
 # Xinyu 2/22/23
@@ -110,17 +114,27 @@ def search_grocery_store_near_home(gmaps, home_address):
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', target_address = '9500 Gilman Dr, La Jolla, CA'):
+def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', target_address = '9500 Gilman Dr, La Jolla, CA', start_nickname='', target_nickname=''):
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
     restaurant_info = score_nearby_restaurants(gmaps, home_address)
     hospital_info = score_nearby_hospitals(gmaps, home_address)
     grocery_info = score_nearby_stores(gmaps, home_address)
     commuting_info = time_commuting_from_home_to_target(gmaps, home_address, target_address)
+
+    # If nickname is specified, send nickname instead.
+    if (start_nickname != ''):
+        home_address= start_nickname
+    
+    if (target_nickname != ''):
+        target_address = target_nickname
+
     context = {
         'restaurant_info': restaurant_info,
         'hospital_info': hospital_info,
         'grocery_info': grocery_info,
-        'commuting_info': commuting_info
+        'commuting_info': commuting_info,
+        'home_address': home_address,
+        'target_address': target_address,
     }
     return render(request, 'scores.html', context = context)
 
