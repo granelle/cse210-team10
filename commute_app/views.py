@@ -52,8 +52,12 @@ def scores_generator(request, userInput):
     # It's a basic scores calculate with only commute
     #return search_near_home(request, home_address = userInput['start_addr'], 
     #target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
+
+    # Mohana add database stuff here
+
+    Search.objects.create(startAdd = userInput['start_addr'], startNick = userInput['start_name'], targetAdd = userInput['target_addr'], targetNick = userInput['target_name'])
     return search_near_home(request, home_address = userInput['start_addr'], 
-    target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
+    target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname = userInput['target_name'])
 
 
 

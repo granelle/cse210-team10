@@ -8,6 +8,6 @@ class Search(models.Model):
     targetNick = models.CharField(max_length=500)
     date = models.DateTimeField(auto_now_add=True) # automatically adds
 
-    def __str__(self):
+    def __str__(self): # right now if database has same nickname, replacing with the newest value
         return self.startNick
 
