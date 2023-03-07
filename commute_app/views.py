@@ -43,8 +43,6 @@ def display_scores(request):
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
     # It's a basic scores calculate with only commute
-    #return search_near_home(request, home_address = userInput['start_addr'], 
-    #target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
     return search_near_home(request, home_address = userInput['start_addr'], 
     target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
 
@@ -106,19 +104,25 @@ def search_grocery_store_near_home(gmaps, home_address):
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', target_address = '9500 Gilman Dr, La Jolla, CA', start_nickname='', target_nickname=''):
+def search_near_home(request, home_address, target_address, start_nickname, target_nickname):
+    # Use default addresses if user input address is empty.
+    if (home_address == ''):
+        home_address= '3869 Miramar St, La Jolla, CA'
+    if (target_address == ''):
+        target_address = '9500 Gilman Dr, La Jolla, CA'
+
+    # If nickname is not specified, send address instead.
+    if (start_nickname == ''):
+        start_nickname = home_address
+
+    if (target_nickname == ''):
+        target_nickname = target_address
+    
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
     restaurant_info = score_nearby_restaurants(gmaps, home_address)
     hospital_info = score_nearby_hospitals(gmaps, home_address)
     grocery_info = score_nearby_stores(gmaps, home_address)
     commuting_info = time_commuting_from_home_to_target(gmaps, home_address, target_address)
-
-    # If nickname is specified, send nickname instead.
-    if (start_nickname != ''):
-        home_address= start_nickname
-    
-    if (target_nickname != ''):
-        target_address = target_nickname
 
     context = {
         'restaurant_info': restaurant_info,
@@ -127,6 +131,8 @@ def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', targ
         'commuting_info': commuting_info,
         'home_address': home_address,
         'target_address': target_address,
+        'start_nickname': start_nickname,
+        'target_nickname': target_nickname
     }
     return render(request, 'scores.html', context = context)
 
