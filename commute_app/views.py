@@ -3,6 +3,9 @@ from django.http import HttpResponse
 import googlemaps
 import requests
 from math import *
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views import generic
 import re
 
 # Create your views here.
@@ -69,6 +72,11 @@ def display_test(request):
     # TODO: "go" button at home should direct to this page when errors occur
     # TODO: "go back" button at this page should direct to home page 
     return render(request, 'test.html')
+
+class display_signup(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
 
 # Junyi backend work
 # Create your views here.
