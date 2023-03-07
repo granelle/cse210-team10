@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import googlemaps
 import requests
 from math import *
+import re
 
 # Create your views here.
 # request -> response
@@ -43,7 +44,10 @@ def display_scores(request):
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
     # It's a basic scores calculate with only commute
-    return search_near_home(request, home_address = userInput['start_addr'], 
+    #return search_near_home(request, home_address = userInput['start_addr'], 
+    #target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
+    return search_near_home(request, weights_list= [userInput['commute_weight'], userInput['restaurant_weight'], userInput['grocery_weight'], userInput['medical_weight']], 
+    home_address = userInput['start_addr'], 
     target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
 
 
@@ -104,7 +108,7 @@ def search_grocery_store_near_home(gmaps, home_address):
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_near_home(request, home_address, target_address, start_nickname, target_nickname):
+def search_near_home(request, weights_list, home_address, target_address, start_nickname, target_nickname):
     # Use default addresses if user input address is empty.
     if (home_address == ''):
         home_address= '3869 Miramar St, La Jolla, CA'
@@ -122,13 +126,22 @@ def search_near_home(request, home_address, target_address, start_nickname, targ
     restaurant_info = score_nearby_restaurants(gmaps, home_address)
     hospital_info = score_nearby_hospitals(gmaps, home_address)
     grocery_info = score_nearby_stores(gmaps, home_address)
-    commuting_info = time_commuting_from_home_to_target(gmaps, home_address, target_address)
+    commuting_info = score_commuting(gmaps, home_address, target_address)
+    overall_info = (commuting_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list)
+    # overall_info = (restaurant_info * restaurant_weight + hospital_info * medical_weight + grocery_info * grocery_weight + commuting_info * commute_weight) / (commute_weight + restaurant_weight + grocery_weight + medical_weight)
+    # If nickname is specified, send nickname instead.
+    if (start_nickname != ''):
+        home_address= start_nickname
+    
+    if (target_nickname != ''):
+        target_address = target_nickname
 
     context = {
         'restaurant_info': restaurant_info,
         'hospital_info': hospital_info,
         'grocery_info': grocery_info,
         'commuting_info': commuting_info,
+        'overall_info': overall_info,
         'home_address': home_address,
         'target_address': target_address,
         'start_nickname': start_nickname,
@@ -163,3 +176,16 @@ def score_nearby_stores(gmaps, home_address):
     score = log(0.1 * num_of_stores + 0.1) + avg_rating
     return score
 
+def score_commuting(gmaps, home_address, targe_address):
+    est_time, _ = time_commuting_from_home_to_target(gmaps, home_address, targe_address)
+    time_list = re.findall(r'\d+', est_time)
+    if len(time_list) == 1:
+        time_in_minute = int(time_list[0])
+    elif len(time_list) == 2:
+        time_in_minute = int(time_list[0]) * 60 + int(time_list[1])
+    elif len(time_list) == 3:
+        time_in_minute = int(time_list[0]) * 60 * 24 + int(time_list[1]) * 60 + int(time_list[2])
+    if time_in_minute < 15:
+        return 5
+    else:
+        return 75 / time_in_minute
