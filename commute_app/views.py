@@ -108,7 +108,20 @@ def search_grocery_store_near_home(gmaps, home_address):
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_near_home(request, weights_list, home_address='3869 Miramar St, La Jolla, CA', target_address = '9500 Gilman Dr, La Jolla, CA', start_nickname='', target_nickname=''):
+def search_near_home(request, weights_list, home_address, target_address, start_nickname, target_nickname):
+    # Use default addresses if user input address is empty.
+    if (home_address == ''):
+        home_address= '3869 Miramar St, La Jolla, CA'
+    if (target_address == ''):
+        target_address = '9500 Gilman Dr, La Jolla, CA'
+
+    # If nickname is not specified, send address instead.
+    if (start_nickname == ''):
+        start_nickname = home_address
+
+    if (target_nickname == ''):
+        target_nickname = target_address
+    
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
     restaurant_info = score_nearby_restaurants(gmaps, home_address)
     hospital_info = score_nearby_hospitals(gmaps, home_address)
@@ -130,7 +143,9 @@ def search_near_home(request, weights_list, home_address='3869 Miramar St, La Jo
         'commuting_info': commuting_info,
         'overall_info': overall_info,
         'home_address': home_address,
-        'target_address': target_address
+        'target_address': target_address,
+        'start_nickname': start_nickname,
+        'target_nickname': target_nickname
     }
     return render(request, 'scores.html', context = context)
 
