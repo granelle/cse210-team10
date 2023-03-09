@@ -13,6 +13,7 @@
             <a href="{% url 'tutorial' %}">About</a>
             <a href="">Contact Us</a>
             {% if user.is_authenticated %}
+                <a href="{% url 'favorite' %}">Favorite</a>
                 <a href="{% url 'logout' %}">Log Out</a>
             {% else %}
                 <a href="{% url 'login' %}">Log In</a>
