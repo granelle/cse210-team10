@@ -222,17 +222,17 @@ def time_commuting_from_home_to_target(gmaps, source_address, target_address, mo
 def score_nearby_restaurants(gmaps, home_address):
     num_of_restaurants, avg_rating = search_restaurant_near_home(gmaps, home_address)
     score = log(0.1 * num_of_restaurants + 0.1) + avg_rating
-    return score
+    return round(score, 2)
 
 def score_nearby_hospitals(gmaps, home_address):
     num_of_hospitals, avg_rating = search_hospital_near_home(gmaps, home_address)
     score = log(0.1 * num_of_hospitals + 0.1) + avg_rating
-    return score
+    return round(score, 2)
 
 def score_nearby_stores(gmaps, home_address):
     num_of_stores, avg_rating = search_grocery_store_near_home(gmaps, home_address)
     score = log(0.1 * num_of_stores + 0.1) + avg_rating
-    return score
+    return round(score, 2)
 
 def score_commuting(gmaps, home_address, targe_address, mode):
     est_time, _ = time_commuting_from_home_to_target(gmaps, home_address, targe_address, mode)
@@ -246,4 +246,4 @@ def score_commuting(gmaps, home_address, targe_address, mode):
     if time_in_minute < 15:
         return 5
     else:
-        return 75 / time_in_minute
+        return round(75 / time_in_minute, 2)
