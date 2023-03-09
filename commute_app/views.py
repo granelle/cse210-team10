@@ -139,7 +139,6 @@ def search_grocery_store_near_home(gmaps, home_address):
         return (0, 0)
     avg_rating = sum(e['rating'] for e in response.json()['results']) / number_of_stores
     return (number_of_stores, avg_rating)
-    #Todo: return to rendering a result page and show current return data in that page.
 
 def search_near_home(request, weights_list, start_address, target_address, start_nickname, target_nickname, mode_list=['driving', 'walking', 'bicycling', 'transit']):
     # Use default addresses if user input address is empty.
@@ -205,7 +204,6 @@ def search_near_home(request, weights_list, start_address, target_address, start
         #return render(request, 'error.html')
 
     return render(request, 'rating.html', context = context)
-
 
 def time_commuting_from_home_to_target(gmaps, source_address, target_address, mode):
     s_geocode_result = gmaps.geocode(source_address)
