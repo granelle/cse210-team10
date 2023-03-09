@@ -22,6 +22,9 @@ def database_test(request):
 
 
 # Mohana and Ye connected homepage to backend 2/20/23
+from commute_app import models
+
+
 def go_home(request):
     # pull data from db
     # send email, etc
@@ -80,6 +83,13 @@ def display_test(request):
     # TODO: "go" button at home should direct to this page when errors occur
     # TODO: "go back" button at this page should direct to home page 
     return render(request, 'test.html')
+
+def display_favorite(request):
+    search_list = models.Search.objects.all()
+    mydict = {
+        'search_list':search_list
+    }
+    return render(request, 'favorite.html', context = mydict)
 
 class display_signup(generic.CreateView):
     form_class = UserCreationForm
