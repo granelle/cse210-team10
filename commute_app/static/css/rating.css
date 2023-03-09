@@ -1,0 +1,85 @@
+@import "base.css";
+
+* {
+   font-family: "Courier New", monospace;
+   font-size: large;
+}
+
+.full-container {
+   display: flex;
+   flex-direction: row;
+}
+
+.left-content {
+   display: flex;
+   flex-direction: column;
+   align-items: left;
+   width: 55%;
+   margin-left: 100px;
+}
+
+.part {
+   display: flex;
+   width: 90%;
+   height: 30px;
+   background: linear-gradient(to right, white, rgb(189, 214, 249), white);
+   /* background-color: linear-gradient(rgb(200, 219, 245), white); */
+}
+
+.item {
+   flex-direction: column;
+   margin-top: 10px;
+   height: 80px;
+   margin-bottom: 10px;
+   float: left;
+   margin-left: 50px;
+   /* align-items: flex-start */
+}
+
+.right-content {
+   float: left;
+   flex-direction: row;
+}
+
+.message {
+   display: table-caption;
+   text-align: right;
+   margin-left: 200px;
+   font-size: 80px;
+   color: rgb(189, 214, 249);
+   font-weight: 900;
+}
+
+.earth-img {
+   height: 500px;
+}
+
+/* .info {
+   margin-left: 20px;
+} */
+
+/* 4.5-5 */
+.rperf {
+   color: #b8d38f;
+}
+
+/* 4-4.5 */
+.rgood {
+   color: #b8f1ed;
+}
+
+/* 3-4 */
+.rok {
+   color: #fecf45;
+}
+
+/* 2-3 */
+.rokk {
+   color: #ff9b6a;
+}
+
+/* 0-2 */
+.rbad {
+   /* color: #fecf45; */
+   color: #f1707d;
+}

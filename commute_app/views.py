@@ -22,7 +22,7 @@ def display_scores(request):
     # display scores
     # TODO: "go" button at home should direct to this page
     # TODO: solve the incorrect address input -> jump to error page
-    return render(request, 'scores.html')
+    return render(request, 'rating.html')
     # if request.method == 'POST':
     #     inputContent = {
     #         'start_name' : request.POST['start_name'],
@@ -113,7 +113,7 @@ def search_near_home(request, home_address='3869 Miramar St, La Jolla, CA', targ
         'grocery_info': grocery_info,
         'commuting_info': commuting_info
     }
-    return render(request, 'scores.html', context = context)
+    return render(request, 'rating.html', context = context)
 
 
 def time_commuting_from_home_to_target(gmaps, source_address, target_address):

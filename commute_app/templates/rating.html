@@ -1,0 +1,136 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Google Maps JavaScript library -->
+<script
+    src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"></script>
+
+
+{% extends "base.html" %}
+
+<!-- CSS & js -->
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<html lang="en" dir="ltr">
+<meta charset="utf-8">
+<!-- Title -->
+<title>Scores</title>
+<!-- Mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+{% endblock %}
+
+<!-- <body> -->
+{% block container %}
+<div class="full-container">
+    <div class="left-content">
+        <div class="part"></div>
+        <!-- title -->
+        <div class="item">
+            <div class="info">Start address is: {{start_nickname}}</div>
+            <br>
+            <div class="info">Target address is: {{target_nickname}}</div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- overall -->
+        <div class="item">
+            <div class="info">Overall score {{overall_info}}</div>
+            <span class="fa fa-star rok"></span>
+            <span class="fa fa-star rok"></span>
+            <span class="fa fa-star rok"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <div class="info">User info is: {{user_info}}</div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- commute -->
+        <div class="item">
+            <div class="info">Commute score: {{commuting_info}}</div>
+            <span class="fa fa-star rbad"></span>
+            <span class="fa fa-star rbad"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <div class="info">You have chosen WALK </div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- restaurant -->
+        <div class="item">
+            <div class="info">Restaurant score: {{restaurant_info}}</div>
+            <span class="fa fa-star rgood"></span>
+            <span class="fa fa-star rgood"></span>
+            <span class="fa fa-star rgood"></span>
+            <span class="fa fa-star rgood"></span>
+            <span class="fa fa-star"></span>
+            <div class="info"> 5 restaurants nearby </div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- grocery -->
+        <div class="item">
+            <div>Grocery score: {{grocery_info}}</div>
+            <span class="fa fa-star rperf"></span>
+            <span class="fa fa-star rperf"></span>
+            <span class="fa fa-star rperf"></span>
+            <span class="fa fa-star rperf"></span>
+            <span class="fa fa-star rperf"></span>
+            <div class="info"> Trader Joe's 1mi away</div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- medical -->
+        <div class="item">
+            <div class="info">Medical score: {{hospital_info}}</div>
+            <span class="fa fa-star rokk"></span>
+            <span class="fa fa-star rokk"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <div class="info">Nearest hostpital 1 mile away</div>
+        </div>
+
+        <div class="part"></div>
+    </div>
+
+    <div class="right-content">
+        <div class="earth-img" style="float:left">
+            {% load static %}
+            <img src="{% static 'img/earth.png' %}" style="height: 450px; width: 500px;">
+        </div>
+        <div class="message">YOU GOT IT!</div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% comment %} <h1>Info</h1>
+<div class='info'>
+    <table>
+        <tr>
+            <th>number</th>
+            <th>rate</th>
+        </tr>
+        <tr>
+            <td>{{restaurant_info}}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>est_time</th>
+            <th>distance</th>
+        </tr>
+        <tr>
+            <td>{{commuting_info}}</td>
+        </tr>
+    </table>
+
+</div> {% endcomment %}
