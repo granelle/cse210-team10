@@ -1,0 +1,149 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Google Maps JavaScript library -->
+<script
+    src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"></script>
+
+
+{% extends "base.html" %}
+
+<!-- CSS & js -->
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<html lang="en" dir="ltr">
+<meta charset="utf-8">
+<!-- Title -->
+<title>Scores</title>
+<!-- Mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+{% endblock %}
+
+<!-- <body> -->
+{% block container %}
+<div class="full-container">
+    <div class="left-content">
+        <div class="part"></div>
+        <!-- title -->
+        <div class="item">
+            <div class="info">Start address is: {{start_nickname}}</div>
+            <br>
+            <div class="info">Target address is: {{target_nickname}}</div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- overall -->
+        <div class="item">
+            <div class="info">Overall score {{overall_info}}</div>
+                <i class="overall_stars fa fa-star star"></i>
+                <i class="overall_stars fa fa-star star"></i>
+                <i class="overall_stars fa fa-star star"></i>
+                <i class="overall_stars fa fa-star star"></i>
+                <i class="overall_stars fa fa-star star"></i>
+            <div class="info">User info is: {{user_info}}</div>
+        </div>
+        <div class="part"></div>
+
+        <!-- commute -->
+        <div class="item">
+            <div class="info">Walking score: {{commuting_info}}</div>
+                <i class="commute_stars fa fa-star star"></i>
+                <i class="commute_stars fa fa-star star"></i>
+                <i class="commute_stars fa fa-star star"></i>
+                <i class="commute_stars fa fa-star star"></i>
+                <i class="commute_stars fa fa-star star"></i>
+            <div class="info">You have chosen WALK </div>
+            <div class="info">Driving score: {{driving_info}}</div> 
+            <div class="info">Scores for chosen transportation modes {{commuting_info}}</div> 
+                         
+        </div>
+
+        <div class="part"></div>
+
+        <!-- restaurant -->
+        <div class="item">
+            <div class="info">Restaurant score: {{restaurant_info}}</div>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+            <div class="info"> 5 restaurants nearby </div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- grocery -->
+        <div class="item">
+            <div>Grocery score: {{grocery_info}}</div>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+            <div class="info"> Trader Joe's 1mi away</div>
+        </div>
+
+        <div class="part"></div>
+
+        <!-- medical -->
+        <div class="item" id="medical" value={{medical_info}}>
+            <div class="info">Medical score: {{hospital_info}}</div>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+            <div class="info">Nearest hostpital 1 mile away</div>
+        </div>
+
+        <div class="part"></div>
+
+
+        {% load static %}
+        <script src="{% static 'js/rating.js' %}" type="text/javascript" 
+        defer
+        data-overall={{ overall_info }}
+        data-commute={{ commuting_info }}
+        data-restaurant={{ restaurant_info }}
+        data-grocery={{ grocery_info }}
+        data-medical={{ hospital_info }}></script>
+    </div>
+
+    <div class="right-content">
+        <div class="earth-img" style="float:left">
+            {% load static %}
+            <img src="{% static 'img/earth.png' %}" style="height: 450px; width: 500px;">
+        </div>
+        <div class="message">YOU GOT IT!</div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% comment %} <h1>Info</h1>
+<div class='info'>
+    <table>
+        <tr>
+            <th>number</th>
+            <th>rate</th>
+        </tr>
+        <tr>
+            <td>{{restaurant_info}}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>est_time</th>
+            <th>distance</th>
+        </tr>
+        <tr>
+            <td>{{commuting_info}}</td>
+        </tr>
+    </table>
+
+</div> {% endcomment %}
