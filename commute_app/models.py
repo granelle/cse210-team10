@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Search(models.Model):
+    username = models.CharField(max_length=500, default='no username')
     startAdd = models.TextField() # might need to change type later
     startNick = models.CharField(max_length=500)
     targetAdd = models.TextField() # might need to change type later
@@ -15,5 +16,5 @@ class Search(models.Model):
     groceryScore = models.DecimalField(max_digits = 5,decimal_places=2,default=-1)
 
     def __str__(self): # right now if database has same nickname, replacing with the newest value
-        return self.startNick
+        return self.username
 

@@ -85,7 +85,8 @@ def display_test(request):
     return render(request, 'test.html')
 
 def display_favorite(request):
-    search_list = models.Search.objects.all()
+    search_list = Search.objects.filter(username=request.user.username)
+    #search_list = models.Search.objects.all()
     mydict = {
         'search_list':search_list
     }
@@ -183,10 +184,11 @@ def search_near_home(request, weights_list, start_address, target_address, start
         'target_nickname': target_nickname
     }
 
-    s1 = Search.objects.create(startAdd = start_address, startNick = start_nickname, 
-    targetAdd = target_address, targetNick = target_nickname,
-    overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
-    groceryScore = grocery_info)
+    if(request.user.is_authenticated):
+        s1 = Search.objects.create(username = request.user.username, startAdd = start_address, startNick = start_nickname, 
+        targetAdd = target_address, targetNick = target_nickname,
+        overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
+        groceryScore = grocery_info)
 
 
     # Mohana save to search database here
