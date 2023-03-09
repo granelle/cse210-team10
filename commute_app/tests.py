@@ -40,7 +40,7 @@ class MockCommuteResponse:
             ]
         }
 
- 
+# Test search functionality for API.
 class TestToolAPI(TestCase):
     @patch("googlemaps.Client")
     @patch("requests.request", return_value = MockNearbyResponse())
@@ -60,4 +60,5 @@ class TestToolAPI(TestCase):
     @patch("googlemaps.Client")
     @patch("requests.request", return_value = MockCommuteResponse())
     def test_commute(self, mock_response, mock_gmaps):
-        self.assertEqual(views.time_commuting_from_home_to_target(mock_gmaps, "dummy_home_address", "dummy_target_address"), ("10 min", "3.1 miles"))
+        self.assertEqual(views.time_commuting_from_home_to_target(mock_gmaps, "dummy_home_address", "dummy_target_address", 'dummy_mode'), ("10 min", "3.1 miles"))
+
