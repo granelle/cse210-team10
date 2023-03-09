@@ -45,7 +45,8 @@ def display_scores(request):
             'commute_weight': request.POST['commute_weight'],
             'restaurant_weight': request.POST['restaurant_weight'],
             'grocery_weight': request.POST['grocery_weight'],
-            'medical_weight': request.POST['medical_weight']
+            'medical_weight': request.POST['medical_weight'],
+            'mode_list': request.POST.getlist('trans-modes')
         }
         return scores_generator(request, userInput = inputContent)
     else:
@@ -59,7 +60,7 @@ def scores_generator(request, userInput):
     #target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
     return search_near_home(request, weights_list= [userInput['commute_weight'], userInput['restaurant_weight'], userInput['grocery_weight'], userInput['medical_weight']], 
     start_address = userInput['start_addr'], 
-    target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname= userInput['target_name'])
+    target_address = userInput['target_addr'], start_nickname = userInput['start_name'], target_nickname = userInput['target_name'], mode_list = userInput['mode_list'])
 
 # Xinyu 2/22/23
 def display_tutorial(request):
@@ -129,7 +130,7 @@ def search_grocery_store_near_home(gmaps, home_address):
     return (number_of_stores, avg_rating)
     #Todo: return to rendering a result page and show current return data in that page.
 
-def search_near_home(request, weights_list, start_address, target_address, start_nickname, target_nickname):
+def search_near_home(request, weights_list, start_address, target_address, start_nickname, target_nickname, mode_list=['driving', 'walking', 'bicycling', 'transit']):
     # Use default addresses if user input address is empty.
     if (start_address == ''):
         start_address= '3869 Miramar St, La Jolla, CA'
@@ -147,9 +148,11 @@ def search_near_home(request, weights_list, start_address, target_address, start
     restaurant_info = score_nearby_restaurants(gmaps, start_address)
     hospital_info = score_nearby_hospitals(gmaps, start_address)
     grocery_info = score_nearby_stores(gmaps, start_address)
-    commuting_info = score_commuting(gmaps, start_address, target_address)
-    overall_info = (commuting_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list)
-    # overall_info = (restaurant_info * restaurant_weight + hospital_info * medical_weight + grocery_info * grocery_weight + commuting_info * commute_weight) / (commute_weight + restaurant_weight + grocery_weight + medical_weight)
+    driving_info = score_commuting(gmaps, start_address, target_address, mode="driving")
+    overall_info = (driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list)
+    commuting_info = {}
+    for mode in mode_list:
+        commuting_info[mode] = score_commuting(gmaps, start_address, target_address, mode)
     # If nickname is specified, send nickname instead.
     if (start_nickname != ''):
         home_address= start_nickname
@@ -161,8 +164,9 @@ def search_near_home(request, weights_list, start_address, target_address, start
         'restaurant_info': restaurant_info,
         'hospital_info': hospital_info,
         'grocery_info': grocery_info,
-        'commuting_info': commuting_info,
+        'driving_info': driving_info,
         'overall_info': overall_info,
+        'commuting_info': commuting_info,
         'home_address': start_address, # change home_address here later, inconsistent naming
         'target_address': target_address,
         'start_nickname': start_nickname,
@@ -171,7 +175,7 @@ def search_near_home(request, weights_list, start_address, target_address, start
 
     s1 = Search.objects.create(startAdd = start_address, startNick = start_nickname, 
     targetAdd = target_address, targetNick = target_nickname,
-    overallScore = overall_info, driveScore = commuting_info, restScore = restaurant_info, hospScore = hospital_info,
+    overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
     groceryScore = grocery_info)
 
 
@@ -191,12 +195,13 @@ def search_near_home(request, weights_list, start_address, target_address, start
     return render(request, 'rating.html', context = context)
 
 
-def time_commuting_from_home_to_target(gmaps, source_address, target_address):
+def time_commuting_from_home_to_target(gmaps, source_address, target_address, mode):
     s_geocode_result = gmaps.geocode(source_address)
     t_geocode_result = gmaps.geocode(target_address)
     s_lat, s_lng, t_lat, t_lng = str(s_geocode_result[0]['geometry']['location']['lat']), str(s_geocode_result[0]['geometry']['location']['lng']), str(t_geocode_result[0]['geometry']['location']['lat']), str(t_geocode_result[0]['geometry']['location']['lng'])
     # "https://maps.googleapis.com/maps/api/distancematrix/json?origins=40.6655101%2C-73.89188969999998&destinations=40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&key=YOUR_API_KEY"
-    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + s_lat + "%2C" + s_lng + "&destinations=" + t_lat + "%2C" + t_lng + "&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
+    result_list = []
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + s_lat + "%2C" + s_lng + "&destinations=" + t_lat + "%2C" + t_lng + "&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc&mode=" + mode 
     response = requests.request("GET", url, headers = {}, data = {})
     est_time = response.json()['rows'][0]['elements'][0]['duration']['text']
     distance = response.json()['rows'][0]['elements'][0]['distance']['text']
@@ -217,8 +222,8 @@ def score_nearby_stores(gmaps, home_address):
     score = log(0.1 * num_of_stores + 0.1) + avg_rating
     return score
 
-def score_commuting(gmaps, home_address, targe_address):
-    est_time, _ = time_commuting_from_home_to_target(gmaps, home_address, targe_address)
+def score_commuting(gmaps, home_address, targe_address, mode):
+    est_time, _ = time_commuting_from_home_to_target(gmaps, home_address, targe_address, mode)
     time_list = re.findall(r'\d+', est_time)
     if len(time_list) == 1:
         time_in_minute = int(time_list[0])
