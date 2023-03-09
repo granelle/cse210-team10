@@ -12,6 +12,11 @@
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'tutorial' %}">About</a>
             <a href="">Contacts</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Log Out</a>
+            {% else %}
+                <a href="{% url 'login' %}">Log In</a>
+            {% endif %}
         </div>
         {% endblock %}  
     </div>
