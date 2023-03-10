@@ -3,7 +3,6 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.contrib.auth.models import User
 from commute_app.models import Search
-import factory
 import googlemaps
 from . import views
 from unittest.mock import Mock, patch
