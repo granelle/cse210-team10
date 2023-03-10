@@ -10,6 +10,7 @@ urlpatterns = [
     path('home/', views.go_home, name = "home"),
     path('rating/', views.display_scores, name = "rating"),
     path('tutorial/', views.display_tutorial, name = 'tutorial'),
+    path('contact/', views.display_contact, name = 'contact'),
     path('error/', views.display_error),
     #Mohana database testing
     path('database_test/', views.database_test),

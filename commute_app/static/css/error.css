@@ -4,22 +4,22 @@
     font-size: medium;
   }
   
-  .ooops {
+  .contacts {
     font-family: "Courier New", monospace;
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
   }
   
-  .wrong {
+  .name {
     font-family: "Courier New", monospace;
-    font-size: xx-large;
-    font-weight: 200;
+    font-size: large;
+    margin-bottom: 0;
+    margin-left: 10px;
+    /* font-weight: 200; */
   }
-  
-  .sorry {
-    font-family: "Courier New", monospace;
-    font-size: small;
-    font-style: oblique;
+
+  .email {
+    display: inline-block;
   }
   
   .container {
@@ -33,16 +33,16 @@
     align-items: left;
     width: 45%;
     margin-top: 40px;
-    margin-left: 80px;
+    margin-left: 300px;
   }
   
   .right-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 45%;
+    /* width: 45%; */
     margin-top: 100px;
-    margin-left: 40px;
+    margin-left: 0px;
   }
   
   .tab {

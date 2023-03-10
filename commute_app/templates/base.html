@@ -11,7 +11,7 @@
         <div class="tab">
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'tutorial' %}">About</a>
-            <a href="">Contact Us</a>
+            <a href="{% url 'contact' %}">Contact Us</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'favorite' %}">Favorite</a>
                 <a href="{% url 'logout' %}">Log Out</a>
