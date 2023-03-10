@@ -81,6 +81,14 @@ def display_tutorial(request):
     # TODO: "get start" at this page should direct to home page
     return render(request, 'tutorial.html')
 
+# Se-eun 3/10/23
+def display_contact(request):
+    # display tutorial
+    # TODO: "about" button at home should direct to this page
+    # TODO: "get start" at this page should direct to home page
+    return render(request, 'contact.html')
+
+
 def display_error(request):
     # display error
     # TODO: "go" button at home should direct to this page when errors occur
