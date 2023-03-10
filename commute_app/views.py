@@ -76,7 +76,7 @@ def display_scores(request):
 def add_favorite_entry_to_database(request, input):
     if(request.user.is_authenticated):
         s1 = Search.objects.create(username = request.user.username, startAdd = input['home_address'], startNick = input['start_nickname'], 
-        targetAdd = input['target_nickname'], targetNick = input['target_nickname'], 
+        targetAdd = input['target_address'], targetNick = input['target_nickname'], 
         overallScore = input['overall_info'], driveScore = input['driving_info'], restScore = input['restaurant_info'], hospScore = input['hospital_info'],
         groceryScore = input['grocery_info'])
     return
