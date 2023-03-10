@@ -40,12 +40,21 @@
 	flex-direction: row;
 	align-items: center;
 	margin-left:45px;
+	margin-bottom:100px;
+}
+
+.video-title{
+	font-family: "Georgia", Serif;
+	font-size: 30px;
+  	color: #ab8967;
+	margin-bottom:20px;
 }
 
 .list-element {
 	/* font-family: "Georgia", Serif; */
     font-size: 25px;
 	color: #020202;
+	margin-bottom:5px;
 }
 
 .left-content {
