@@ -6,17 +6,19 @@
 }
 
 .main-title {
-  font-family: "Georgia", Serif;
-  font-size: 60px;
+  font-size: 30px;
   font-weight: bold;
   color: #010D82;
 }
 
 .body {
-  font-family: "Georgia", Serif;
-  font-size: 30px;
-  /* font-style: oblique; */
+  font-size: 20px;
   color: #84879E;
+}
+
+.body-emph{
+  font-size: 20px;
+  color: #000000;
 }
 
 .watch-demo {
@@ -43,16 +45,16 @@
 	margin-bottom:100px;
 }
 
-.video-title{
+.video-main{
 	font-family: "Georgia", Serif;
 	font-size: 30px;
   	color: #ab8967;
 	margin-bottom:20px;
 }
 
-.list-element {
-	/* font-family: "Georgia", Serif; */
+.list-title {
     font-size: 25px;
+	font-weight: bold;
 	color: #020202;
 	margin-bottom:5px;
 }
@@ -65,6 +67,12 @@
   margin-top: 40px;
   margin-left: 200px;
   margin-right: 50px;
+}
+
+li{
+	margin:10px 40px;
+	font-size: 20px;
+	/* font-weight: bold; */
 }
 
 .right-content {
