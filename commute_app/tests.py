@@ -1,6 +1,7 @@
 import django
 from django.test import TestCase
 from django.test.client import RequestFactory
+import factory
 import googlemaps
 from . import views
 from unittest.mock import Mock, patch
