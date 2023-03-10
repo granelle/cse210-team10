@@ -11,22 +11,56 @@
 {% block container %}
 <div class="container">
     <div class="left-content">
-        <p class="tutorial-video">Tutorial Video </p>
+        <p class="main-title">Check how good your home's location is.</p>
         <br/>
         <br/>
         <br/>
         <br/>
-        <p class="compare">Compare your desired houses quickly. </p>
         <div class="container">
-            <button class="go-back-btn" onclick="window.location.href = '{% url 'home' %}'"> Get Started </button>
-            <p class="watch-demo">> Watch Demo</p>
+            <p class="body">
+                Finding a new place to live?
+                Perhaps a crucial factor would be the location.
+                Everyone has different standards of what a good location is &#8212;
+                you may want somewhere that is easy to drive from to your everyday work,
+                or you may want somewhere that is more walkable, bikable, or has better access to public transportation.
+                Or maybe you don't care much about commute,
+                and you perfer a place that has better access to resturants or groceries.
+                Our website helps you get <b class="body">personalized scores</b> of your potential new home 
+                based on your location preferences.
+            </p>
+            {% comment %} <button class="go-back-btn" onclick="window.location.href = '{% url 'home' %}'"> Get Started </button>
+            <p class="watch-demo"> Watch Demo</p> {% endcomment %}
+            
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+        <div class="container">
+            <p class="list-element">Here is how to do it.</p>
+        </div>
+
+        <br/>
+        <br/>
+
+        <div class="list-container">
+            <ol>
+                <li class="list-element">Enter your new home (start address) and your daily commute (target address)</li>
+                <li class="list-element">Use the bars to adjust how much importance you want to give to each factor (commute, restaurant, crocery, medical)</li>
+                <li class="list-element">Select the method of commute</li>
+                <li class="list-element">Click "Go" to view your scores!</li>
+            </ol>
         </div>
     </div>
 
-    <div class="" style="width:660px;height: 440px;margin: 50px auto;">
+    <div class="" style="width:660px;height: 440px;margin: 50px;">
+
+        <p class="video-title">Watch a tutorial video!</p>
         <div id="cool-play" class="cool-play">
             <div class="cool-title">
-                <span>How this website help your rental desicion</span>
+                <span>How this website help your rental decision</span>
             </div>
 
             <div class="cool-video">
