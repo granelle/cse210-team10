@@ -1,6 +1,8 @@
 import django
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.contrib.auth.models import User
+from commute_app.models import Search
 import factory
 import googlemaps
 from . import views
@@ -102,3 +104,25 @@ class TestScoreAPI(TestCase):
     @patch('commute_app.views.time_commuting_from_home_to_target', return_value = ('1 day 8 hours 24 mins', []))
     def test_score_commuting_days(self, mock_response, mock_gmaps, mock_search):
         self.assertEqual(views.score_commuting(mock_gmaps, 'dummy_home_address', 'dummy_target_address', 'driving'), 0.04)
+
+# Test Search model.
+class TestSearchModel(TestCase):
+    def createSearchFactory(self, username = 'Tim Jang', startAdd = 'UCSD', startNick = 'Home', targetAdd = 'Los Angeles', targetNick = 'School', date = None, overallScore = 4.5, driveScore = 3.5, restScore = 2.4, hospScore = 3.3, groceryScore = 2.4):
+        return Search.objects.create(username=username, startAdd=startAdd, startNick=startNick, targetAdd=targetAdd, targetNick=targetNick, date=date, overallScore=overallScore, driveScore=driveScore, restScore=restScore, hospScore=hospScore, groceryScore=groceryScore)
+
+    def test_cerate_model(self):
+        searchModel = self.createSearchFactory()
+        self.assertTrue(isinstance(searchModel, Search))
+        self.assertEqual(searchModel.__str__(), searchModel.username)
+
+# Test logging into the website.
+class LogInTest(TestCase):
+    def setUp(self):
+        self.credentials = {
+            'username': 'username',
+            'password': 'password'}
+        User.objects.create_user(**self.credentials)
+
+    def test_login(self):
+        response = self.client.post('/login/', self.credentials)
+        self.assertTrue(type(response), django.http.response)
