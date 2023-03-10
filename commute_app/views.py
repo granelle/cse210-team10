@@ -40,47 +40,21 @@ def display_scores(request):
     # TODO: solve the incorrect address input -> jump to error page
     #return render(request, 'rating.html')
     if request.method == 'POST':
-        if request.POST['search_method'] == "search":
-            inputContent = {
-                'start_name' : request.POST['start_name'],
-                'start_addr': request.POST['start_addr'],
-                'target_name': request.POST['target_name'],
-                'target_addr': request.POST['target_addr'],
-                'commute_weight': request.POST['commute_weight'],
-                'restaurant_weight': request.POST['restaurant_weight'],
-                'grocery_weight': request.POST['grocery_weight'],
-                'medical_weight': request.POST['medical_weight'],
-                'mode_list': request.POST.getlist('trans-modes')
-            }
-            return scores_generator(request, userInput=inputContent)
-        else:
-            print(request.POST['start_addr'])
-            inputContent = {
-                'restaurant_info': request.POST['restaurant_info'],
-                'hospital_info': request.POST['hospital_info'],
-                'grocery_info': request.POST['grocery_info'],
-                'driving_info': request.POST[ 'driving_info'],
-                'overall_info': request.POST['overall_info'],
-                'commuting_info': request.POST['commuting_info'],
-                'home_address': request.POST['start_addr'], # change home_address here later, inconsistent naming
-                'target_address': request.POST['target_addr'],
-                'start_nickname': request.POST['start_name'],
-                'target_nickname': request.POST['target_name'],
-            }
-            add_favorite_entry_to_database(request, inputContent)
-            return render(request, 'rating.html', context = inputContent)
+        inputContent = {
+            'start_name' : request.POST['start_name'],
+            'start_addr': request.POST['start_addr'],
+            'target_name': request.POST['target_name'],
+            'target_addr': request.POST['target_addr'],
+            'commute_weight': request.POST['commute_weight'],
+            'restaurant_weight': request.POST['restaurant_weight'],
+            'grocery_weight': request.POST['grocery_weight'],
+            'medical_weight': request.POST['medical_weight'],
+            'mode_list': request.POST.getlist('trans-modes')
+        }
+        return scores_generator(request, userInput = inputContent)
     else:
         # TODO: some error check
         return render(request, 'error.html')
-
-def add_favorite_entry_to_database(request, input):
-    if(request.user.is_authenticated):
-        s1 = Search.objects.create(username = request.user.username, startAdd = input['home_address'], startNick = input['start_nickname'], 
-        targetAdd = input['target_nickname'], targetNick = input['target_nickname'], 
-        overallScore = input['overall_info'], driveScore = input['driving_info'], restScore = input['restaurant_info'], hospScore = input['hospital_info'],
-        groceryScore = input['grocery_info'])
-    return
-
 
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
@@ -127,8 +101,10 @@ class display_signup(generic.CreateView):
 # Create your views here.
 def search_restaurant_near_home(gmaps, home_address):
     geocode_result = gmaps.geocode(home_address)
-    lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
-    
+    try:
+        lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
+    except IndexError as e:
+        raise e
     #compose the url
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=5000&type=restaurant&keyword=restaurant&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
     response = requests.request("GET", url, headers = {}, data = {})
@@ -141,8 +117,10 @@ def search_restaurant_near_home(gmaps, home_address):
 
 def search_hospital_near_home(gmaps, home_address):
     geocode_result = gmaps.geocode(home_address)
-    lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
-    
+    try:
+        lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
+    except IndexError as e:
+        raise e
     #compose the url
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=3000&type=hospital&keyword=hospital&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
     response = requests.request("GET", url, headers = {}, data = {})
@@ -155,8 +133,10 @@ def search_hospital_near_home(gmaps, home_address):
 
 def search_grocery_store_near_home(gmaps, home_address):
     geocode_result = gmaps.geocode(home_address)
-    lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
-    
+    try:
+        lat, lng = str(geocode_result[0]['geometry']['location']['lat']), str(geocode_result[0]['geometry']['location']['lng'])
+    except IndexError as e:
+        raise e
     #compose the url
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat +"%2C" + lng + "&radius=1000&type=supermarket&keyword=supermarket&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc"
     response = requests.request("GET", url, headers = {}, data = {})
@@ -173,7 +153,7 @@ def search_near_home(request, weights_list, start_address, target_address, start
     if (target_address == ''):
         target_address = '9500 Gilman Dr, La Jolla, CA'
 
-    #If nickname is not specified, send address instead.
+    # If nickname is not specified, send address instead.
     if (start_nickname == ''):
         start_nickname = start_address
 
@@ -181,15 +161,26 @@ def search_near_home(request, weights_list, start_address, target_address, start
         target_nickname = target_address
     
     gmaps = googlemaps.Client(key='AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc')
-    restaurant_info = score_nearby_restaurants(gmaps, start_address)
-    hospital_info = score_nearby_hospitals(gmaps, start_address)
-    grocery_info = score_nearby_stores(gmaps, start_address)
-    driving_info = score_commuting(gmaps, start_address, target_address, mode="driving")
-    overall_info = round((driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list), 2)
+    try:
+        restaurant_info = score_nearby_restaurants(gmaps, start_address)
+        hospital_info = score_nearby_hospitals(gmaps, start_address)
+        grocery_info = score_nearby_stores(gmaps, start_address)
+        driving_info = score_commuting(gmaps, start_address, target_address, mode="driving")
+    except IndexError as e:
+        return render(request, 'error.html')
+    overall_info = (driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list)
     commuting_info = {}
     for mode in mode_list:
-        commuting_info[mode] = score_commuting(gmaps, start_address, target_address, mode)
+        try:
+            commuting_info[mode] = score_commuting(gmaps, start_address, target_address, mode)
+        except IndexError as e:
+            return render(request, 'error.html')
     # If nickname is specified, send nickname instead.
+    if (start_nickname != ''):
+        home_address= start_nickname
+    
+    if (target_nickname != ''):
+        target_address = target_nickname
 
     context = {
         'restaurant_info': restaurant_info,
@@ -204,11 +195,11 @@ def search_near_home(request, weights_list, start_address, target_address, start
         'target_nickname': target_nickname
     }
 
-    # if(request.user.is_authenticated):
-    #     s1 = Search.objects.create(username = request.user.username, startAdd = start_address, startNick = start_nickname, 
-    #     targetAdd = target_address, targetNick = target_nickname,
-    #     overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
-    #     groceryScore = grocery_info)
+    if(request.user.is_authenticated):
+        s1 = Search.objects.create(username = request.user.username, startAdd = start_address, startNick = start_nickname, 
+        targetAdd = target_address, targetNick = target_nickname,
+        overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
+        groceryScore = grocery_info)
 
 
     # Mohana save to search database here
@@ -229,7 +220,10 @@ def search_near_home(request, weights_list, start_address, target_address, start
 def time_commuting_from_home_to_target(gmaps, source_address, target_address, mode):
     s_geocode_result = gmaps.geocode(source_address)
     t_geocode_result = gmaps.geocode(target_address)
-    s_lat, s_lng, t_lat, t_lng = str(s_geocode_result[0]['geometry']['location']['lat']), str(s_geocode_result[0]['geometry']['location']['lng']), str(t_geocode_result[0]['geometry']['location']['lat']), str(t_geocode_result[0]['geometry']['location']['lng'])
+    try:
+        s_lat, s_lng, t_lat, t_lng = str(s_geocode_result[0]['geometry']['location']['lat']), str(s_geocode_result[0]['geometry']['location']['lng']), str(t_geocode_result[0]['geometry']['location']['lat']), str(t_geocode_result[0]['geometry']['location']['lng'])
+    except IndexError as e:
+        raise e
     # "https://maps.googleapis.com/maps/api/distancematrix/json?origins=40.6655101%2C-73.89188969999998&destinations=40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&key=YOUR_API_KEY"
     result_list = []
     url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + s_lat + "%2C" + s_lng + "&destinations=" + t_lat + "%2C" + t_lng + "&key=AIzaSyDlgbzrdKouAchIHAfHog63OYtqkf0RPoc&mode=" + mode 
@@ -239,22 +233,34 @@ def time_commuting_from_home_to_target(gmaps, source_address, target_address, mo
     return (est_time, distance)
 
 def score_nearby_restaurants(gmaps, home_address):
-    num_of_restaurants, avg_rating = search_restaurant_near_home(gmaps, home_address)
+    try:
+        num_of_restaurants, avg_rating = search_restaurant_near_home(gmaps, home_address)
+    except IndexError as e:
+        raise e
     score = log(0.1 * num_of_restaurants + 0.1) + avg_rating
     return round(score, 2)
 
 def score_nearby_hospitals(gmaps, home_address):
-    num_of_hospitals, avg_rating = search_hospital_near_home(gmaps, home_address)
+    try:
+        num_of_hospitals, avg_rating = search_hospital_near_home(gmaps, home_address)
+    except IndexError as e:
+        raise e
     score = log(0.1 * num_of_hospitals + 0.1) + avg_rating
     return round(score, 2)
 
 def score_nearby_stores(gmaps, home_address):
-    num_of_stores, avg_rating = search_grocery_store_near_home(gmaps, home_address)
+    try:
+        num_of_stores, avg_rating = search_grocery_store_near_home(gmaps, home_address)
+    except IndexError as e:
+        raise e
     score = log(0.1 * num_of_stores + 0.1) + avg_rating
     return round(score, 2)
 
 def score_commuting(gmaps, home_address, targe_address, mode):
-    est_time, _ = time_commuting_from_home_to_target(gmaps, home_address, targe_address, mode)
+    try:
+        est_time, _ = time_commuting_from_home_to_target(gmaps, home_address, targe_address, mode)
+    except IndexError as e:
+        raise e
     time_list = re.findall(r'\d+', est_time)
     if len(time_list) == 1:
         time_in_minute = int(time_list[0])
