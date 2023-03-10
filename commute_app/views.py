@@ -67,13 +67,18 @@ def display_scores(request):
                 'start_nickname': request.POST['start_name'],
                 'target_nickname': request.POST['target_name'],
             }
-            add_favorite_entry_to_database(inputContent)
+            add_favorite_entry_to_database(request, inputContent)
             return render(request, 'rating.html', context = inputContent)
     else:
         # TODO: some error check
         return render(request, 'error.html')
 
-def add_favorite_entry_to_database(input):
+def add_favorite_entry_to_database(request, input):
+    if(request.user.is_authenticated):
+        s1 = Search.objects.create(username = request.user.username, startAdd = input['home_address'], startNick = input['start_nickname'], 
+        targetAdd = input['target_nickname'], targetNick = input['target_nickname'], 
+        overallScore = input['overall_info'], driveScore = input['driving_info'], restScore = input['restaurant_info'], hospScore = input['hospital_info'],
+        groceryScore = input['grocery_info'])
     return
 
 
@@ -168,7 +173,7 @@ def search_near_home(request, weights_list, start_address, target_address, start
     if (target_address == ''):
         target_address = '9500 Gilman Dr, La Jolla, CA'
 
-    # If nickname is not specified, send address instead.
+    #If nickname is not specified, send address instead.
     if (start_nickname == ''):
         start_nickname = start_address
 
@@ -185,11 +190,6 @@ def search_near_home(request, weights_list, start_address, target_address, start
     for mode in mode_list:
         commuting_info[mode] = score_commuting(gmaps, start_address, target_address, mode)
     # If nickname is specified, send nickname instead.
-    if (start_nickname != ''):
-        home_address= start_nickname
-    
-    if (target_nickname != ''):
-        target_address = target_nickname
 
     context = {
         'restaurant_info': restaurant_info,
@@ -204,11 +204,11 @@ def search_near_home(request, weights_list, start_address, target_address, start
         'target_nickname': target_nickname
     }
 
-    if(request.user.is_authenticated):
-        s1 = Search.objects.create(username = request.user.username, startAdd = start_address, startNick = start_nickname, 
-        targetAdd = target_address, targetNick = target_nickname,
-        overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
-        groceryScore = grocery_info)
+    # if(request.user.is_authenticated):
+    #     s1 = Search.objects.create(username = request.user.username, startAdd = start_address, startNick = start_nickname, 
+    #     targetAdd = target_address, targetNick = target_nickname,
+    #     overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
+    #     groceryScore = grocery_info)
 
 
     # Mohana save to search database here
