@@ -1,3 +1,2 @@
 coverage==5.3.1
 Django==4.1.7
-factory-boy==2.0.1

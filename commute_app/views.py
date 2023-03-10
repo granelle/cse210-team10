@@ -180,7 +180,7 @@ def search_near_home(request, weights_list, start_address, target_address, start
     hospital_info = score_nearby_hospitals(gmaps, start_address)
     grocery_info = score_nearby_stores(gmaps, start_address)
     driving_info = score_commuting(gmaps, start_address, target_address, mode="driving")
-    overall_info = (driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list)
+    overall_info = round((driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list), 2)
     commuting_info = {}
     for mode in mode_list:
         commuting_info[mode] = score_commuting(gmaps, start_address, target_address, mode)
