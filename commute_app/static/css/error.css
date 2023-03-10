@@ -1,3 +1,4 @@
+@import "base.css";
 * {
     font-family: "Courier New", monospace;
     font-size: medium;
@@ -30,16 +31,16 @@
     display: flex;
     flex-direction: column;
     align-items: left;
-    width: 55%;
+    width: 45%;
     margin-top: 40px;
-    margin-left: 100px;
+    margin-left: 80px;
   }
   
   .right-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 55%;
+    width: 45%;
     margin-top: 100px;
     margin-left: 40px;
   }

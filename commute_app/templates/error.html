@@ -1,34 +1,23 @@
-TODO: Need to reuse template
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    {% load static %}
+
+{% load static %}
+{% block styles %}
     <link rel="stylesheet" href="{% static 'css/error.css' %}">
-</head>
-<body>
-<div id="header">
-    <div class="tab">
-        <button class="tablinks" >Home</button>
-        <button class="tablinks" >About</button>
-        <button class="tablinks" >Contacts</button>
-    </div>  
-</div>
+{% endblock %}
+
+{% block container %}
 <div class="container">
-    <div class="left-content">
-        <p class="ooops">Ooops... </h1>
-        <p class="wrong">Something went wrong </p>
-        <p class="sorry">Sorry. We are working on this... </p>
+<div class="left-content">
+    <p class="ooops">Ooops... </h1>
+    <p class="wrong">Something went wrong </p>
+    <p class="sorry">Sorry. We are working on this... </p>
 
-        <button class="go-back-btn">Go Back </button>
-    </div>
-
-    <div class="right-content">
-        <img src="{% static 'img/error_link.jpg' %}" style="height: 420px; width: 560px;">
-    </div>
-    
+    <button class="go-back-btn" onclick="window.location.href = '{% url 'home' %}'">Go Back </button>
 </div>
 
-</body>
-</html>
+<div class="right-content">
+    <img src="{% static 'img/error_link.jpg' %}" style="height: 420px; width: 560px;">
+</div>
+</div>
+{% endblock %}
