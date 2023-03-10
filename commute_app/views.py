@@ -40,21 +40,42 @@ def display_scores(request):
     # TODO: solve the incorrect address input -> jump to error page
     #return render(request, 'rating.html')
     if request.method == 'POST':
-        inputContent = {
-            'start_name' : request.POST['start_name'],
-            'start_addr': request.POST['start_addr'],
-            'target_name': request.POST['target_name'],
-            'target_addr': request.POST['target_addr'],
-            'commute_weight': request.POST['commute_weight'],
-            'restaurant_weight': request.POST['restaurant_weight'],
-            'grocery_weight': request.POST['grocery_weight'],
-            'medical_weight': request.POST['medical_weight'],
-            'mode_list': request.POST.getlist('trans-modes')
-        }
-        return scores_generator(request, userInput = inputContent)
+        if request.POST['search_method'] == "search":
+            inputContent = {
+                'start_name' : request.POST['start_name'],
+                'start_addr': request.POST['start_addr'],
+                'target_name': request.POST['target_name'],
+                'target_addr': request.POST['target_addr'],
+                'commute_weight': request.POST['commute_weight'],
+                'restaurant_weight': request.POST['restaurant_weight'],
+                'grocery_weight': request.POST['grocery_weight'],
+                'medical_weight': request.POST['medical_weight'],
+                'mode_list': request.POST.getlist('trans-modes')
+            }
+            return scores_generator(request, userInput=inputContent)
+        else:
+            print(request.POST['start_addr'])
+            inputContent = {
+                'restaurant_info': request.POST['restaurant_info'],
+                'hospital_info': request.POST['hospital_info'],
+                'grocery_info': request.POST['grocery_info'],
+                'driving_info': request.POST[ 'driving_info'],
+                'overall_info': request.POST['overall_info'],
+                'commuting_info': request.POST['commuting_info'],
+                'home_address': request.POST['start_addr'], # change home_address here later, inconsistent naming
+                'target_address': request.POST['target_addr'],
+                'start_nickname': request.POST['start_name'],
+                'target_nickname': request.POST['target_name'],
+            }
+            add_favorite_entry_to_database(inputContent)
+            return render(request, 'rating.html', context = inputContent)
     else:
         # TODO: some error check
         return render(request, 'error.html')
+
+def add_favorite_entry_to_database(input):
+    return
+
 
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score

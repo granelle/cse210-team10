@@ -80,3 +80,16 @@
    /* color: #fecf45; */
    color: #f1707d;
 }
+
+.btn {
+  border-radius: 5px;
+  background-color: #010D82; /* Green */
+  border: none;
+  color: white;
+  width: 150px;
+  padding: 10px 20px 10px 20px;
+  margin-top: 10px;
+  font-weight: initial;
+  font-size: small;
+  cursor: pointer;
+}
