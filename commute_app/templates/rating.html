@@ -30,6 +30,22 @@
             <div class="info">Start address is: {{start_nickname}}</div>
             <br>
             <div class="info">Target address is: {{target_nickname}}</div>
+            <br>
+            <form class="container", method="post">
+                {% csrf_token %}
+                <input type="hidden" id = "start_name", name = "start_name", value = "{{ start_nickname }}">
+                <input type="hidden" id = "start_addr", name = "start_addr", value = "{{ home_address}}">
+                <input type="hidden" id = "target_name", name = "target_name", value = "{{ target_nickname }}">
+                <input type="hidden" id = "target_addr", name = "target_addr", value = "{{ target_address}}">
+                <input type="hidden" id = "overall_info", name = "overall_info", value = "{{ overall_info }}">
+                <input type="hidden" id = "restaurant_info", name = "restaurant_info", value = "{{ restaurant_info}}">
+                <input type="hidden" id = "hospital_info", name = "hospital_info", value = "{{ hospital_info }}">
+                <input type="hidden" id = "commuting_info", name = "commuting_info", value = "{{ commuting_info }}">
+                <input type="hidden" id = "grocery_info", name = "grocery_info", value = "{{ grocery_info }}">
+                <input type="hidden" id = "driving_info", name = "driving_info", value = "{{ driving_info }}">
+                <input type="hidden" id = "search_method", name = "search_method", value = "favorite">
+                <input class = "btn" type="submit" value="Add Favorite">
+            </form>
         </div>
 
         <div class="part"></div>
@@ -48,15 +64,19 @@
 
         <!-- commute -->
         <div class="item">
-            <div class="info">Walking score: {{commuting_info}}</div>
+            <div class="info">Driving score: {{driving_info}}</div>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
-            <div class="info">You have chosen WALK </div>
-            <div class="info">Driving score: {{driving_info}}</div> 
-            <div class="info">Scores for chosen transportation modes {{commuting_info}}</div> 
+            <div class="info">Scores for chosen transportation modes:
+            <br>
+            {% for key, value in commuting_info.items %}
+                <td> {{ key }} : {{ value }} </td>
+                <br>
+            {% endfor %}
+            </div> 
                          
         </div>
 
