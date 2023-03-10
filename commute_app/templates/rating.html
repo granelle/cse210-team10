@@ -48,15 +48,19 @@
 
         <!-- commute -->
         <div class="item">
-            <div class="info">Walking score: {{commuting_info}}</div>
+            <div class="info">Driving score: {{driving_info}}</div>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
                 <i class="commute_stars fa fa-star star"></i>
-            <div class="info">You have chosen WALK </div>
-            <div class="info">Driving score: {{driving_info}}</div> 
-            <div class="info">Scores for chosen transportation modes {{commuting_info}}</div> 
+            <div class="info">Scores for chosen transportation modes:
+            <br>
+            {% for key, value in commuting_info.items %}
+                <td> {{ key }} : {{ value }} </td>
+                <br>
+            {% endfor %}
+            </div> 
                          
         </div>
 
