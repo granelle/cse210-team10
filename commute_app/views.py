@@ -56,6 +56,15 @@ def display_scores(request):
         # TODO: some error check
         return render(request, 'error.html')
 
+def add_favorite_entry_to_database(request, input):
+    if(request.user.is_authenticated):
+        s1 = Search.objects.create(username = request.user.username, startAdd = input['home_address'], startNick = input['start_nickname'], 
+        targetAdd = input['target_address'], targetNick = input['target_nickname'], 
+        overallScore = input['overall_info'], driveScore = input['driving_info'], restScore = input['restaurant_info'], hospScore = input['hospital_info'],
+        groceryScore = input['grocery_info'])
+    return
+
+
 def scores_generator(request, userInput):
     # TODO: figure out the algorithm to generate score
     # It's a basic scores calculate with only commute
