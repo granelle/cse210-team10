@@ -5,18 +5,43 @@
   font-size: medium;
 }
 
+body {
+	margin: 8px;
+}
+
+.container {
+	margin:8;
+	display: flex;
+	flex-direction: row;
+	/* align-items: center;
+	margin-left:0px; */
+  }
+  
+
+.left-content {
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	width: 55%;
+	margin-top: 40px;
+	margin-left: 200px;
+	margin-right: 50px;
+  }
+
 .main-title {
-  font-family: "Georgia", Serif;
-  font-size: 60px;
+  font-size: 30px;
   font-weight: bold;
-  color: #010D82;
+  color:  #4285F4;
 }
 
 .body {
-  font-family: "Georgia", Serif;
-  font-size: 30px;
-  /* font-style: oblique; */
+  font-size: 20px;
   color: #84879E;
+}
+
+.body-emph{
+  font-size: 20px;
+  color: #000000;
 }
 
 .watch-demo {
@@ -28,12 +53,6 @@
   color: #010D82; 
 }
 
-.container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left:0px;
-}
 
 .list-container {
 	display: flex;
@@ -43,28 +62,26 @@
 	margin-bottom:100px;
 }
 
-.video-title{
+.video-main{
 	font-family: "Georgia", Serif;
 	font-size: 30px;
   	color: #ab8967;
 	margin-bottom:20px;
 }
 
-.list-element {
-	/* font-family: "Georgia", Serif; */
+.list-title {
     font-size: 25px;
+	font-weight: bold;
 	color: #020202;
 	margin-bottom:5px;
 }
 
-.left-content {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  width: 40%;
-  margin-top: 40px;
-  margin-left: 200px;
-  margin-right: 50px;
+
+
+li{
+	margin:10px 40px;
+	font-size: 20px;
+	/* font-weight: bold; */
 }
 
 .right-content {
@@ -76,17 +93,36 @@
   margin-left: 40px;
 }
 
+  
 .go-back-btn {
-  border-radius: 5px;
-  background-color: #010D82; /* Green */
-  border: none;
-  color: white;
-  width: 100px;
-  padding: 10px 20px 10px 20px;
-  margin-top: 10px;
-  font-weight: initial;
-  font-size: small;
-  cursor: pointer;
+    border-radius: 25px;
+    background-color: #4285F4; /* Green */
+    border: none;
+    color: white;
+    width: 150px;
+    padding: 10px 20px 10px 20px;
+    margin-top: 50px;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+
+.contacts {
+font-family: "Courier New", monospace;
+font-size: x-large;
+font-weight: bold;
+}
+
+.name {
+font-family: "Courier New", monospace;
+font-size: large;
+margin-bottom: 0;
+margin-left: 10px;
+/* font-weight: 200; */
+}
+
+.email {
+display: inline-block;
 }
 
 @font-face {

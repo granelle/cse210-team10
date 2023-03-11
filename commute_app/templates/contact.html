@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/tutorial.css' %}">
+{% endblock %}
+
+{% block container %}
+<div class="container">
+<div class="left-content">
+    <p class="contacts">Contact us</h1>
+        <br></br>
+        <p class="name">Mohana Seelan: mseelan@ucsd.edu</p>
+        <p class="name">Junyi Yang: juy012@ucsd.edu</p>
+        <p class="name">Se-eun Yoon: s4yoon@ucsd.edu</p>
+        <p class="name">Wonsuk Jang: w1jang@ucsd.edu</p>
+        <p class="name">Ye Zeng: yezeng@ucsd.edu</p>
+        <p class="name">Xinyu Zhou: xiz143@ucsd.edu</p>
+    <button class="go-back-btn" onclick="window.location.href = '{% url 'home' %}'">Go Back </button>
+</div>
+
+<div class="right-content">
+    <img src="{% static 'img/contact.png' %}" style="height: 420px; width: 420px;">
+</div>
+</div>
+{% endblock %}
