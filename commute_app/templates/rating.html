@@ -30,21 +30,75 @@
             <div class="info">Start address is: {{start_nickname}}</div>
             <br>
             <div class="info">Target address is: {{target_nickname}}</div>
-            <br>
-            <form class="container", method="post">
+            <form class="fav_container" id="fav_form" method="post">
                 {% csrf_token %}
-                <input type="hidden" id = "start_name", name = "start_name", value = "{{ start_nickname }}">
-                <input type="hidden" id = "start_addr", name = "start_addr", value = "{{ home_address}}">
-                <input type="hidden" id = "target_name", name = "target_name", value = "{{ target_nickname }}">
-                <input type="hidden" id = "target_addr", name = "target_addr", value = "{{ target_address}}">
-                <input type="hidden" id = "overall_info", name = "overall_info", value = "{{ overall_info }}">
-                <input type="hidden" id = "restaurant_info", name = "restaurant_info", value = "{{ restaurant_info}}">
-                <input type="hidden" id = "hospital_info", name = "hospital_info", value = "{{ hospital_info }}">
-                <input type="hidden" id = "commuting_info", name = "commuting_info", value = "{{ commuting_info }}">
-                <input type="hidden" id = "grocery_info", name = "grocery_info", value = "{{ grocery_info }}">
-                <input type="hidden" id = "driving_info", name = "driving_info", value = "{{ driving_info }}">
-                <input type="hidden" id = "search_method", name = "search_method", value = "favorite">
-                <input class = "btn" type="submit" value="Add Favorite">
+                <!-- if {{ is_favorite }} = "fav" -->
+                <div class="fav_hint">Add it to favorite:</div>
+                <input type="checkbox" class="checkbox" id="checkbox" name="is_favorite" 
+                value="fav" {% if 'fav' in 'checkbox' %} checked {% else %} 'unfav' {% endif %} onChange="handle_fav()" />
+                <label for="checkbox">
+                    <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                            <path id="heart"
+                                d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
+                                fill="#AAB8C2" />
+                            <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5" />
+
+                            <g id="grp7" opacity="0" transform="translate(7 6)">
+                                <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2" />
+                                <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2" />
+                            </g>
+
+                            <g id="grp6" opacity="0" transform="translate(0 28)">
+                                <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2" />
+                                <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2" />
+                            </g>
+
+                            <g id="grp3" opacity="0" transform="translate(52 28)">
+                                <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2" />
+                                <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2" />
+                            </g>
+
+                            <g id="grp2" opacity="0" transform="translate(44 6)">
+                                <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2" />
+                                <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2" />
+                            </g>
+
+                            <g id="grp5" opacity="0" transform="translate(14 50)">
+                                <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2" />
+                                <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2" />
+                            </g>
+
+                            <g id="grp4" opacity="0" transform="translate(35 50)">
+                                <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2" />
+                                <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2" />
+                            </g>
+
+                            <g id="grp1" opacity="0" transform="translate(24)">
+                                <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2" />
+                                <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2" />
+                            </g>
+                        </g>
+                    </svg>
+                </label>
+
+                <div id="snackbar">Added the search to favorite successfully!</div>
+                {% load static %}
+                <script src="{% static 'js/fav.js' %}" type="text/javascript" defer data-fav={{ is_favorite }}></script>
+
+                <input type="hidden" id="start_name" , name="start_name" , value="{{ start_nickname }}">
+                <input type="hidden" id="start_addr" , name="start_addr" , value="{{ home_address}}">
+                <input type="hidden" id="target_name" , name="target_name" , value="{{ target_nickname }}">
+                <input type="hidden" id="target_addr" , name="target_addr" , value="{{ target_address}}">
+                <input type="hidden" id="overall_info" , name="overall_info" , value="{{ overall_info }}">
+                <input type="hidden" id="restaurant_info" , name="restaurant_info" , value="{{ restaurant_info}}">
+                <input type="hidden" id="hospital_info" , name="hospital_info" , value="{{ hospital_info }}">
+                <input type="hidden" id="commuting_info" , name="commuting_info" , value="{{ commuting_info }}">
+                <input type="hidden" id="grocery_info" , name="grocery_info" , value="{{ grocery_info }}">
+                <input type="hidden" id="driving_info" , name="driving_info" , value="{{ driving_info }}">
+                <input type="hidden" id="search_method" , name="search_method" , value="favorite">
+
+
             </form>
         </div>
 
@@ -53,83 +107,81 @@
         <!-- overall -->
         <div class="item">
             <div class="info">Overall score {{overall_info}}</div>
-                <i class="overall_stars fa fa-star star"></i>
-                <i class="overall_stars fa fa-star star"></i>
-                <i class="overall_stars fa fa-star star"></i>
-                <i class="overall_stars fa fa-star star"></i>
-                <i class="overall_stars fa fa-star star"></i>
+            <i class="overall_stars fa fa-star star"></i>
+            <i class="overall_stars fa fa-star star"></i>
+            <i class="overall_stars fa fa-star star"></i>
+            <i class="overall_stars fa fa-star star"></i>
+            <i class="overall_stars fa fa-star star"></i>
             <div class="info">User info is: {{user_info}}</div>
         </div>
         <div class="part"></div>
 
         <!-- commute -->
         <div class="item">
+            <!-- !!important: if you change the variable name, must update it in data-commute, line183 -->
             <div class="info">Driving score: {{driving_info}}</div>
-                <i class="commute_stars fa fa-star star"></i>
-                <i class="commute_stars fa fa-star star"></i>
-                <i class="commute_stars fa fa-star star"></i>
-                <i class="commute_stars fa fa-star star"></i>
-                <i class="commute_stars fa fa-star star"></i>
+            <i class="commute_stars fa fa-star star"></i>
+            <i class="commute_stars fa fa-star star"></i>
+            <i class="commute_stars fa fa-star star"></i>
+            <i class="commute_stars fa fa-star star"></i>
+            <i class="commute_stars fa fa-star star"></i>
             <div class="info">Scores for chosen transportation modes:
-            <br>
-            {% for key, value in commuting_info.items %}
+                <br>
+                {% for key, value in commuting_info.items %}
                 <td> {{ key }} : {{ value }} </td>
                 <br>
-            {% endfor %}
-            </div> 
-                         
+                {% endfor %}
+            </div>
+
+
+
+            <div class="part"></div>
+
+            <!-- restaurant -->
+            <div class="item">
+                <div class="info">Restaurant score: {{restaurant_info}}</div>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <div class="info"> 5 restaurants nearby </div>
+            </div>
+
+            <div class="part"></div>
+
+            <!-- grocery -->
+            <div class="item">
+                <div>Grocery score: {{grocery_info}}</div>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <div class="info"> Trader Joe's 1mi away</div>
+            </div>
+
+            <div class="part"></div>
+
+            <!-- medical -->
+            <div class="item" id="medical" value={{medical_info}}>
+                <div class="info">Medical score: {{hospital_info}}</div>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <div class="info">Nearest hostpital 1 mile away</div>
+            </div>
+
+            <div class="part"></div>
+
+
+            {% load static %}
+            <script src="{% static 'js/rating.js' %}" type="text/javascript" defer data-overall={{ overall_info }}
+                data-commute={{ driving_info }} data-restaurant={{ restaurant_info }} data-grocery={{ grocery_info }}
+                data-medical={{ hospital_info }}></script>
         </div>
-
-        <div class="part"></div>
-
-        <!-- restaurant -->
-        <div class="item">
-            <div class="info">Restaurant score: {{restaurant_info}}</div>
-                <i class="restaurant_stars fa fa-star star"></i>
-                <i class="restaurant_stars fa fa-star star"></i>
-                <i class="restaurant_stars fa fa-star star"></i>
-                <i class="restaurant_stars fa fa-star star"></i>
-                <i class="restaurant_stars fa fa-star star"></i>
-            <div class="info"> 5 restaurants nearby </div>
-        </div>
-
-        <div class="part"></div>
-
-        <!-- grocery -->
-        <div class="item">
-            <div>Grocery score: {{grocery_info}}</div>
-                <i class="grocery_stars fa fa-star star"></i>
-                <i class="grocery_stars fa fa-star star"></i>
-                <i class="grocery_stars fa fa-star star"></i>
-                <i class="grocery_stars fa fa-star star"></i>
-                <i class="grocery_stars fa fa-star star"></i>
-            <div class="info"> Trader Joe's 1mi away</div>
-        </div>
-
-        <div class="part"></div>
-
-        <!-- medical -->
-        <div class="item" id="medical" value={{medical_info}}>
-            <div class="info">Medical score: {{hospital_info}}</div>
-                <i class="medical_stars fa fa-star star"></i>
-                <i class="medical_stars fa fa-star star"></i>
-                <i class="medical_stars fa fa-star star"></i>
-                <i class="medical_stars fa fa-star star"></i>
-                <i class="medical_stars fa fa-star star"></i>
-            <div class="info">Nearest hostpital 1 mile away</div>
-        </div>
-
-        <div class="part"></div>
-
-
-        {% load static %}
-        <script src="{% static 'js/rating.js' %}" type="text/javascript" 
-        defer
-        data-overall={{ overall_info }}
-        data-commute={{ commuting_info }}
-        data-restaurant={{ restaurant_info }}
-        data-grocery={{ grocery_info }}
-        data-medical={{ hospital_info }}></script>
     </div>
 
     <div class="right-content">

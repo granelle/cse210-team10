@@ -1,4 +1,4 @@
-const data = document.currentScript.dataset;
+data = document.currentScript.dataset;
 const r_overall = parseInt(data.overall)
 const r_commute = parseInt(data.commute)
 const r_restaurant = parseInt(data.restaurant)
@@ -19,7 +19,6 @@ Array.from(overall_stars).forEach((s, index) => {
 })
 
 commute_color = getColor(r_commute)
-console.log(commute_color)
 Array.from(commute_stars).forEach((s, index) => {
     if(index<r_commute) {
         s.style.color = commute_color;

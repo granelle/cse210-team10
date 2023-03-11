@@ -1,3 +1,4 @@
+import time
 from django.shortcuts import render
 from django.http import HttpResponse
 import googlemaps
@@ -40,21 +41,78 @@ def display_scores(request):
     # TODO: solve the incorrect address input -> jump to error page
     #return render(request, 'rating.html')
     if request.method == 'POST':
-        inputContent = {
-            'start_name' : request.POST['start_name'],
-            'start_addr': request.POST['start_addr'],
-            'target_name': request.POST['target_name'],
-            'target_addr': request.POST['target_addr'],
-            'commute_weight': request.POST['commute_weight'],
-            'restaurant_weight': request.POST['restaurant_weight'],
-            'grocery_weight': request.POST['grocery_weight'],
-            'medical_weight': request.POST['medical_weight'],
-            'mode_list': request.POST.getlist('trans-modes')
-        }
-        return scores_generator(request, userInput = inputContent)
+        if request.POST['search_method'] == "search":
+            inputContent = {
+                'start_name' : request.POST['start_name'],
+                'start_addr': request.POST['start_addr'],
+                'target_name': request.POST['target_name'],
+                'target_addr': request.POST['target_addr'],
+                'commute_weight': request.POST['commute_weight'],
+                'restaurant_weight': request.POST['restaurant_weight'],
+                'grocery_weight': request.POST['grocery_weight'],
+                'medical_weight': request.POST['medical_weight'],
+                'mode_list': request.POST.getlist('trans-modes')
+            }
+            return scores_generator(request, userInput=inputContent)
+        else:
+            print(request.POST['start_addr'])
+            inputContent = {
+                'restaurant_info': request.POST['restaurant_info'],
+                'hospital_info': request.POST['hospital_info'],
+                'grocery_info': request.POST['grocery_info'],
+                'driving_info': request.POST[ 'driving_info'],
+                'overall_info': request.POST['overall_info'],
+                'commuting_info': request.POST['commuting_info'],
+                'home_address': request.POST['start_addr'], # change home_address here later, inconsistent naming
+                'target_address': request.POST['target_addr'],
+                'start_nickname': request.POST['start_name'],
+                'target_nickname': request.POST['target_name'],
+                'is_favorite': request.POST['is_favorite'],
+            }
+            # time.sleep(5)
+            add_favorite_entry_to_database(inputContent)
+            return render(request, 'rating.html', context = inputContent)
     else:
         # TODO: some error check
         return render(request, 'error.html')
+
+# Se-eun 2/22/23
+def display_scores(request):
+    print(request.user.username)
+    # display scores
+    # TODO: "go" button at home should direct to this page
+    # TODO: solve the incorrect address input -> jump to error page
+    #return render(request, 'rating.html')
+    if request.method == 'POST':
+        if request.POST['search_method'] == "search":
+            inputContent = {
+                'start_name' : request.POST['start_name'],
+                'start_addr': request.POST['start_addr'],
+                'target_name': request.POST['target_name'],
+                'target_addr': request.POST['target_addr'],
+                'commute_weight': request.POST['commute_weight'],
+                'restaurant_weight': request.POST['restaurant_weight'],
+                'grocery_weight': request.POST['grocery_weight'],
+                'medical_weight': request.POST['medical_weight'],
+                'mode_list': request.POST.getlist('trans-modes')
+            }
+            return scores_generator(request, userInput=inputContent)
+        else:
+            print(request.POST['start_addr'])
+            inputContent = {
+                'restaurant_info': request.POST['restaurant_info'],
+                'hospital_info': request.POST['hospital_info'],
+                'grocery_info': request.POST['grocery_info'],
+                'driving_info': request.POST[ 'driving_info'],
+                'overall_info': request.POST['overall_info'],
+                'commuting_info': request.POST['commuting_info'],
+                'home_address': request.POST['start_addr'], # change home_address here later, inconsistent naming
+                'target_address': request.POST['target_addr'],
+                'start_nickname': request.POST['start_name'],
+                'target_nickname': request.POST['target_name'],
+            }
+            add_favorite_entry_to_database(request, inputContent)
+            return render(request, 'rating.html', context = inputContent)
 
 def add_favorite_entry_to_database(request, input):
     if(request.user.is_authenticated):
@@ -87,7 +145,6 @@ def display_contact(request):
     # TODO: "about" button at home should direct to this page
     # TODO: "get start" at this page should direct to home page
     return render(request, 'contact.html')
-
 
 def display_error(request):
     # display error
@@ -233,6 +290,14 @@ def search_near_home(request, weights_list, start_address, target_address, start
         #return render(request, 'error.html')
 
     return render(request, 'rating.html', context = context)
+
+def find_address_pair_in_database(request, start_addr, target_addr):
+# check if target address & start address exist in the database
+    is_favorite = "unfav" 
+    
+    search_list = Search.objects.filter(username=request.user.username, startAdd = start_addr, targetAdd = target_addr)
+    if(search_list != ''):
+        is_favorite = "fav"
 
 def time_commuting_from_home_to_target(gmaps, source_address, target_address, mode):
     s_geocode_result = gmaps.geocode(source_address)
