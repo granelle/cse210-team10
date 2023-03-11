@@ -30,9 +30,10 @@
             <div class="info">Start address is: {{start_nickname}}</div>
             <br>
             <div class="info">Target address is: {{target_nickname}}</div>
-            <form id="fav_form" method="post">
+            <form class="fav_container" id="fav_form" method="post">
                 {% csrf_token %}
                 <!-- if {{ is_favorite }} = "fav" -->
+                <div class="fav_hint">Add it to favorite:</div>
                 <input type="checkbox" class="checkbox" id="checkbox" name = "is_favorite" 
                 value="fav" {% if 'fav' in 'checkbox' %} checked {% else %} 'unfav' {% endif %}
                 onChange="handle_fav()"/>
