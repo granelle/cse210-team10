@@ -1,3 +1,4 @@
+import time
 from django.shortcuts import render
 from django.http import HttpResponse
 import googlemaps
@@ -66,8 +67,10 @@ def display_scores(request):
                 'target_address': request.POST['target_addr'],
                 'start_nickname': request.POST['start_name'],
                 'target_nickname': request.POST['target_name'],
+                'is_favorite': request.POST['is_favorite'],
             }
             add_favorite_entry_to_database(inputContent)
+            time.sleep(0.6)
             return render(request, 'rating.html', context = inputContent)
     else:
         # TODO: some error check
@@ -190,6 +193,8 @@ def search_near_home(request, weights_list, start_address, target_address, start
     
     if (target_nickname != ''):
         target_address = target_nickname
+  
+    is_favorite = find_address_pair_in_database(request, start_address, target_address)
 
     context = {
         'restaurant_info': restaurant_info,
@@ -201,7 +206,8 @@ def search_near_home(request, weights_list, start_address, target_address, start
         'home_address': start_address, # change home_address here later, inconsistent naming
         'target_address': target_address,
         'start_nickname': start_nickname,
-        'target_nickname': target_nickname
+        'target_nickname': target_nickname,
+        'is_favorite': is_favorite, 
     }
 
     if(request.user.is_authenticated):
@@ -225,6 +231,14 @@ def search_near_home(request, weights_list, start_address, target_address, start
         #return render(request, 'error.html')
 
     return render(request, 'rating.html', context = context)
+
+def find_address_pair_in_database(request, start_addr, target_addr):
+# check if target address & start address exist in the database
+    is_favorite = "unfav" 
+    
+    search_list = Search.objects.filter(username=request.user.username, startAdd = start_addr, targetAdd = target_addr)
+    if(search_list != ''):
+        is_favorite = "fav"
 
 def time_commuting_from_home_to_target(gmaps, source_address, target_address, mode):
     s_geocode_result = gmaps.geocode(source_address)

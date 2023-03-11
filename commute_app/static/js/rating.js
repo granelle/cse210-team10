@@ -13,7 +13,7 @@ var medical_stars = document.getElementsByClassName("medical_stars fa fa-star st
 
 overall_color = getColor(r_overall)
 Array.from(overall_stars).forEach((s, index) => {
-    if(index<r_overall) {
+    if (index < r_overall) {
         s.style.color = overall_color;
     }
 })
@@ -21,51 +21,51 @@ Array.from(overall_stars).forEach((s, index) => {
 commute_color = getColor(r_commute)
 console.log(commute_color)
 Array.from(commute_stars).forEach((s, index) => {
-    if(index<r_commute) {
+    if (index < r_commute) {
         s.style.color = commute_color;
     }
 })
 
 restaurant_color = getColor(r_restaurant)
 Array.from(restaurant_stars).forEach((s, index) => {
-    if(index<r_restaurant) {
+    if (index < r_restaurant) {
         s.style.color = restaurant_color;
     }
 })
 
 grocery_color = getColor(r_grocery)
 Array.from(grocery_stars).forEach((s, index) => {
-    if(index<r_grocery) {
+    if (index < r_grocery) {
         s.style.color = grocery_color;
     }
 })
 
 medical_color = getColor(r_medical)
 Array.from(medical_stars).forEach((s, index) => {
-    if(index<r_medical) {
+    if (index < r_medical) {
         s.style.color = medical_color;
     }
 })
 
 
-function getColor(score){
+function getColor(score) {
     // perfect
-    if(score>=4.5) {
+    if (score >= 4.5) {
         return "#b8d38f";
     }
 
     // good
-    else if(score >=4) {
+    else if (score >= 4) {
         return "#b8f1ed";
     }
 
     // ok
-    else if(score >=3) {
+    else if (score >= 3) {
         return "#fecf45";
     }
 
     // okk
-    else if(score >=2) {
+    else if (score >= 2) {
         return "#ff9b6a";
     }
 
@@ -74,4 +74,4 @@ function getColor(score){
         return "#f1707d";
     }
 
-  }
+}
