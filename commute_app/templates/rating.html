@@ -34,9 +34,8 @@
                 {% csrf_token %}
                 <!-- if {{ is_favorite }} = "fav" -->
                 <div class="fav_hint">Add it to favorite:</div>
-                <input type="checkbox" class="checkbox" id="checkbox" name = "is_favorite" 
-                value="fav" {% if 'fav' in 'checkbox' %} checked {% else %} 'unfav' {% endif %}
-                onChange="handle_fav()"/>
+                <input type="checkbox" class="checkbox" id="checkbox" name="is_favorite" 
+                value="fav" {% if 'fav' in 'checkbox' %} checked {% else %} 'unfav' {% endif %} onChange="handle_fav()" />
                 <label for="checkbox">
                     <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
                         <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
@@ -119,6 +118,7 @@
 
         <!-- commute -->
         <div class="item">
+            <!-- !!important: if you change the variable name, must update it in data-commute, line183 -->
             <div class="info">Driving score: {{driving_info}}</div>
             <i class="commute_stars fa fa-star star"></i>
             <i class="commute_stars fa fa-star star"></i>
@@ -133,54 +133,55 @@
                 {% endfor %}
             </div>
 
+
+
+            <div class="part"></div>
+
+            <!-- restaurant -->
+            <div class="item">
+                <div class="info">Restaurant score: {{restaurant_info}}</div>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <i class="restaurant_stars fa fa-star star"></i>
+                <div class="info"> 5 restaurants nearby </div>
+            </div>
+
+            <div class="part"></div>
+
+            <!-- grocery -->
+            <div class="item">
+                <div>Grocery score: {{grocery_info}}</div>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <i class="grocery_stars fa fa-star star"></i>
+                <div class="info"> Trader Joe's 1mi away</div>
+            </div>
+
+            <div class="part"></div>
+
+            <!-- medical -->
+            <div class="item" id="medical" value={{medical_info}}>
+                <div class="info">Medical score: {{hospital_info}}</div>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <i class="medical_stars fa fa-star star"></i>
+                <div class="info">Nearest hostpital 1 mile away</div>
+            </div>
+
+            <div class="part"></div>
+
+
+            {% load static %}
+            <script src="{% static 'js/rating.js' %}" type="text/javascript" defer data-overall={{ overall_info }}
+                data-commute={{ driving_info }} data-restaurant={{ restaurant_info }} data-grocery={{ grocery_info }}
+                data-medical={{ hospital_info }}></script>
         </div>
-
-        <div class="part"></div>
-
-        <!-- restaurant -->
-        <div class="item">
-            <div class="info">Restaurant score: {{restaurant_info}}</div>
-            <i class="restaurant_stars fa fa-star star"></i>
-            <i class="restaurant_stars fa fa-star star"></i>
-            <i class="restaurant_stars fa fa-star star"></i>
-            <i class="restaurant_stars fa fa-star star"></i>
-            <i class="restaurant_stars fa fa-star star"></i>
-            <div class="info"> 5 restaurants nearby </div>
-        </div>
-
-        <div class="part"></div>
-
-        <!-- grocery -->
-        <div class="item">
-            <div>Grocery score: {{grocery_info}}</div>
-            <i class="grocery_stars fa fa-star star"></i>
-            <i class="grocery_stars fa fa-star star"></i>
-            <i class="grocery_stars fa fa-star star"></i>
-            <i class="grocery_stars fa fa-star star"></i>
-            <i class="grocery_stars fa fa-star star"></i>
-            <div class="info"> Trader Joe's 1mi away</div>
-        </div>
-
-        <div class="part"></div>
-
-        <!-- medical -->
-        <div class="item" id="medical" value={{medical_info}}>
-            <div class="info">Medical score: {{hospital_info}}</div>
-            <i class="medical_stars fa fa-star star"></i>
-            <i class="medical_stars fa fa-star star"></i>
-            <i class="medical_stars fa fa-star star"></i>
-            <i class="medical_stars fa fa-star star"></i>
-            <i class="medical_stars fa fa-star star"></i>
-            <div class="info">Nearest hostpital 1 mile away</div>
-        </div>
-
-        <div class="part"></div>
-
-
-        {% load static %}
-        <script src="{% static 'js/rating.js' %}" type="text/javascript" defer data-overall={{ overall_info }}
-            data-commute={{ commuting_info }} data-restaurant={{ restaurant_info }} data-grocery={{ grocery_info }}
-            data-medical={{ hospital_info }}></script>
     </div>
 
     <div class="right-content">

@@ -1,4 +1,4 @@
-const data = document.currentScript.dataset;
+data = document.currentScript.dataset;
 const check_fav = data.fav
 var fav_box = document.getElementById("checkbox")
 

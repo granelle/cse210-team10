@@ -1,4 +1,4 @@
-const data = document.currentScript.dataset;
+data = document.currentScript.dataset;
 const r_overall = parseInt(data.overall)
 const r_commute = parseInt(data.commute)
 const r_restaurant = parseInt(data.restaurant)
