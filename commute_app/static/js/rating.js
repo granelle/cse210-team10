@@ -19,7 +19,6 @@ Array.from(overall_stars).forEach((s, index) => {
 })
 
 commute_color = getColor(r_commute)
-console.log(commute_color)
 Array.from(commute_stars).forEach((s, index) => {
     if(index<r_commute) {
         s.style.color = commute_color;
