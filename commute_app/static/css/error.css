@@ -4,24 +4,6 @@
     font-size: medium;
   }
   
-  .contacts {
-    font-family: "Courier New", monospace;
-    font-size: x-large;
-    font-weight: bold;
-  }
-  
-  .name {
-    font-family: "Courier New", monospace;
-    font-size: large;
-    margin-bottom: 0;
-    margin-left: 10px;
-    /* font-weight: 200; */
-  }
-
-  .email {
-    display: inline-block;
-  }
-  
   .container {
     display: flex;
     flex-direction: row;
