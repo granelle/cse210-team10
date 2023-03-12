@@ -69,7 +69,8 @@
                 <video id="video" class="video">
                     <!-- TODO: replace the source path with the tutorial video-->
                     {% load static %}
-                    <source src="{% static 'img/tutorial_video.mov' %}" type="video/mp4" ></source>
+                    {% comment %} <source src="{% static 'img/tutorial_video.mov' %}" type="video/mp4" ></source> {% endcomment %}
+                    <source src="{% static 'img/tutorial.mp4' %}" type="video/mp4" ></source>
                 </video>
                 <span class="icon-c-loading"></span>
             </div>
