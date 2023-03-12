@@ -116,6 +116,9 @@ def display_scores(request):
 
 def add_favorite_entry_to_database(request, input):
     if(request.user.is_authenticated):
+        tmp = Search.objects.filter(startAdd =  input['home_address'], targetAdd=input['target_address'])
+        if len(tmp) != 0:
+            return
         s1 = Search.objects.create(username = request.user.username, startAdd = input['home_address'], startNick = input['start_nickname'], 
         targetAdd = input['target_address'], targetNick = input['target_nickname'], 
         overallScore = input['overall_info'], driveScore = input['driving_info'], restScore = input['restaurant_info'], hospScore = input['hospital_info'],
@@ -159,7 +162,7 @@ def display_test(request):
     return render(request, 'test.html')
 
 def display_favorite(request):
-    search_list = Search.objects.filter(username=request.user.username)
+    search_list = Search.objects.filter(username=request.user.username).order_by('-overallScore')
     #search_list = models.Search.objects.all()
     mydict = {
         'search_list':search_list
@@ -268,14 +271,6 @@ def search_near_home(request, weights_list, start_address, target_address, start
         'start_nickname': start_nickname,
         'target_nickname': target_nickname
     }
-
-    if(request.user.is_authenticated):
-        s1 = Search.objects.create(username = request.user.username, startAdd = start_address, startNick = start_nickname, 
-        targetAdd = target_address, targetNick = target_nickname,
-        overallScore = overall_info, driveScore = driving_info, restScore = restaurant_info, hospScore = hospital_info,
-        groceryScore = grocery_info)
-
-
     # Mohana save to search database here
     #if(Search.objects.exists(startNick=start_nickname)):
     # s1 = Search.objects.filter(startNick=start_nickname) # can use get?
