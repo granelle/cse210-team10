@@ -245,7 +245,7 @@ def search_near_home(request, weights_list, start_address, target_address, start
         driving_info = score_commuting(gmaps, start_address, target_address, mode="driving")
     except IndexError as e:
         return render(request, 'error.html')
-    overall_info = (driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list)
+    overall_info = min(5, round((driving_info * int(weights_list[0]) + restaurant_info * int(weights_list[1]) + grocery_info * int(weights_list[2]) + hospital_info * int(weights_list[3]))/sum(int(i) for i in weights_list), 2))
     commuting_info = {}
     for mode in mode_list:
         try:
@@ -315,7 +315,7 @@ def score_nearby_restaurants(gmaps, home_address):
     except IndexError as e:
         raise e
     score = log(0.1 * num_of_restaurants + 0.1) + avg_rating
-    return round(score, 2)
+    return min(5, round(score, 2))
 
 def score_nearby_hospitals(gmaps, home_address):
     try:
@@ -323,7 +323,7 @@ def score_nearby_hospitals(gmaps, home_address):
     except IndexError as e:
         raise e
     score = log(0.1 * num_of_hospitals + 0.1) + avg_rating
-    return round(score, 2)
+    return min(5, round(score, 2))
 
 def score_nearby_stores(gmaps, home_address):
     try:
@@ -331,7 +331,7 @@ def score_nearby_stores(gmaps, home_address):
     except IndexError as e:
         raise e
     score = log(0.1 * num_of_stores + 0.1) + avg_rating
-    return round(score, 2)
+    return min(5, round(score, 2))
 
 def score_commuting(gmaps, home_address, targe_address, mode):
     try:
@@ -348,4 +348,4 @@ def score_commuting(gmaps, home_address, targe_address, mode):
     if time_in_minute < 15:
         return 5
     else:
-        return round(75 / time_in_minute, 2)
+        return min(5, round(75 / time_in_minute, 2))
