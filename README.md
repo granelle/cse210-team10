@@ -24,6 +24,6 @@ Then type the the following URL in your browser:
 
 http://127.0.0.1:8000/commute_app/home/
 
-## ADR
+## ADR and documentation
 
-Our ADR (Architectural Design Records) can be found [here](https://docs.google.com/document/d/1XqgHkWYLPa6fjG71FLrOt5PrwSdsD2y9Uk-InZ4Ey70/edit?usp=sharing)
+Our official documentation and ADR (Architectural Design Records) can be found [here](https://docs.google.com/document/d/1XqgHkWYLPa6fjG71FLrOt5PrwSdsD2y9Uk-InZ4Ey70/edit?usp=sharing)
