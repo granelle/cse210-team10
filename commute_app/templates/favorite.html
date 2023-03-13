@@ -9,20 +9,24 @@
 {% block container %}
     <div class="row">
     <div class="panel-heading" style="text-align:center;">
-        <h2>Hi, {{ user.username }}! Here is your favorite routes!</h2>
+        <h2>Hi, {{ user.username }}! Here are your favorite routes!</h2>
     </div>
     <table class="table table-hover" id="dev-table">
         <thead>
           <tr>
             <th>Start Address</th>
+            <th>Start Nickname</th>
             <th>Target Address</th>
+            <th>Target Nickname</th>
             <th>Score</th>
           </tr>
         </thead>
         {% for search in search_list %}
             <tr>
                 <td>{{search.startAdd}}</td>
+                <td>{{search.startNick}}</td>
                 <td>{{search.targetAdd}}</td>
+                <td>{{search.targetNick}}</td>
                 <td>{{search.overallScore}}</td>
             </tr>
         {% endfor %}

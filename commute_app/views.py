@@ -116,7 +116,7 @@ def display_scores(request):
 
 def add_favorite_entry_to_database(request, input):
     if(request.user.is_authenticated):
-        tmp = Search.objects.filter(startAdd =  input['home_address'], targetAdd=input['target_address'])
+        tmp = Search.objects.filter(startAdd =  input['home_address'], targetAdd=input['target_address'], username=request.user.username)
         if len(tmp) != 0:
             return
         s1 = Search.objects.create(username = request.user.username, startAdd = input['home_address'], startNick = input['start_nickname'], 
@@ -252,12 +252,6 @@ def search_near_home(request, weights_list, start_address, target_address, start
             commuting_info[mode] = score_commuting(gmaps, start_address, target_address, mode)
         except IndexError as e:
             return render(request, 'error.html')
-    # If nickname is specified, send nickname instead.
-    if (start_nickname != ''):
-        home_address= start_nickname
-    
-    if (target_nickname != ''):
-        target_address = target_nickname
 
     context = {
         'restaurant_info': restaurant_info,
